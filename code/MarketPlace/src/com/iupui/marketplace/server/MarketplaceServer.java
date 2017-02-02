@@ -24,7 +24,7 @@ public class MarketplaceServer  {
 			
             System.out.println("Creating a Marketplace Server!");
                        MarketplaceController controller = new MarketplaceControllerImpl();
-            Naming.rebind("//127.0.0.1/MarketPlace", controller);         
+            Naming.rebind("//tesla.cs.iupui.edu:2010/MarketPlace", controller);         
             
 	/*	Registry registry= LocateRegistry.createRegistry(2005);
             MarketplaceController controller= new MarketplaceControllerImpl();

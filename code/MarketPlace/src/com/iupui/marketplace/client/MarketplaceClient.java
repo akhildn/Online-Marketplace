@@ -26,7 +26,7 @@ public class MarketplaceClient{
          */   
 
 
-		MarketplaceController controller= (MarketplaceController) Naming.lookup("//127.0.0.1/MarketPlace");
+		MarketplaceController controller= (MarketplaceController) Naming.lookup("//tesla.cs.iupui.edu:2010/MarketPlace");
 	
 		int connectionStatus = controller.connect();
             if(connectionStatus == 1){
