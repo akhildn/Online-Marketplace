@@ -11,7 +11,7 @@ CLASSES = \
 	com/iupui/marketplace/dao/OrderDAO.java \
 	com/iupui/marketplace/dao/ProductCategoryDAO.java \
 	com/iupui/marketplace/dao/ProductDAO.java \
-	com/iupui/marketplace/model/beans/ProductCategory.java \
+	com/iupui/marketplace/model/beans/*.java \
 	com/iupui/marketplace/MarketplaceController.java \
 	com/iupui/marketplace/controller/MarketplaceControllerImpl.java \
 	com/iupui/marketplace/client/MarketplaceClient.java \
