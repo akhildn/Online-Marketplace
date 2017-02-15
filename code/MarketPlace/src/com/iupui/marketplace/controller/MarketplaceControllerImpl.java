@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-import com.iupui.marketplace.MarketplaceController;
-import com.iupui.marketplace.model.beans.Customer;
+import com.iupui.marketplace.dao.AccountDAO;
+import com.iupui.marketplace.model.beans.Account;
 import com.iupui.marketplace.model.beans.Product;
 import com.iupui.marketplace.model.beans.ProductCategory;
 
@@ -20,19 +20,21 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	public MarketplaceControllerImpl() throws RemoteException{}
 	@Override
 	public int connect() throws RemoteException {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public String welcomeMessage() throws RemoteException {
-		// TODO Auto-generated method stub
 		return "Welcome IUPUI OOAD Marketplace !!!";
 	}
 
 	@Override
-	public Customer handleLogin(String username, String password) throws RemoteException {
-		// TODO Auto-generated method stub
+	public Account handleLogin(String username, String password) throws RemoteException {
+		AccountDAO	accountDAO = new AccountDAO();
+		boolean isValid = accountDAO.validateCredentials(username,password);
+		if(isValid){
+			 return accountDAO.getAccountDetails(username);
+		}
 		return null;
 	}
 

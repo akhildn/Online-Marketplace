@@ -1,6 +1,8 @@
 package com.iupui.marketplace.model.beans;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable{
 	private String username;
 	private String password;
 	private String userType;

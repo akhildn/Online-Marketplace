@@ -6,24 +6,19 @@
 package com.iupui.marketplace.server;
 
 import java.rmi.Naming;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
-import java.rmi.registry.*;
 
-import com.iupui.marketplace.*;
+import com.iupui.marketplace.controller.MarketplaceController;
 import com.iupui.marketplace.controller.MarketplaceControllerImpl;
 
 public class MarketplaceServer  {
 
 	private static final long serialVersionUID = 1L;
 
-    
-
 	public static void main(String args[]) {
 		try{
 			
             System.out.println("Creating a Marketplace Server!");
-                       MarketplaceController controller = new MarketplaceControllerImpl();
+			MarketplaceController controller = new MarketplaceControllerImpl();
             Naming.rebind("//tesla.cs.iupui.edu:2010/MarketPlace", controller);         
             
 	/*	Registry registry= LocateRegistry.createRegistry(2005);
@@ -38,3 +33,5 @@ public class MarketplaceServer  {
 	}
 
 }
+
+
