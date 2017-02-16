@@ -4,8 +4,12 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 
 import com.iupui.marketplace.client.*;
+import com.iupui.marketplace.client.handlers.LoginHandler;
+import com.iupui.marketplace.client.commands.CommandInvoker;
+import com.iupui.marketplace.client.commands.LoginCommand;
+import com.iupui.marketplace.client.commands.MarketplaceCommand;
 
-public class LoginView{
+public class LoginView implements MarketplaceView{
  //TODO:
 
 
@@ -15,11 +19,14 @@ public class LoginView{
     }
 
     public void show() throws RemoteException {
+        LoginHandler handler = new LoginHandler(fc);
         Scanner in = new Scanner(System.in);
         System.out.print("Enter Username:");
-        String uname= in.next();
+        handler.setUname(in.next());
         System.out.print("Enter password:");
-        String pass=in.next();
-        fc.authenticate(uname,pass);
+        handler.setPass(in.next());
+        MarketplaceCommand command = new LoginCommand(handler);
+        CommandInvoker invoker = new CommandInvoker();
+        invoker.invoke(command);
     }
 }

@@ -16,6 +16,7 @@ public class MarketplaceFrontController {
         this.dispatcher = new MarketplaceDispatcher();
     }
 
+
     public void authenticate(String uname,String pass) throws RemoteException {
        Account account = controller.handleLogin(uname,pass);
        if(account!=null){
@@ -33,7 +34,7 @@ public class MarketplaceFrontController {
         return isAuthenticate;
     }
 
-     public void dispatchRequest(String page, Account account) {
+     public void dispatchRequest(String page, Account account) throws RemoteException {
         if(isAuthenticUser()) {
             dispatcher.dispatch(page,account);
         }
@@ -43,4 +44,9 @@ public class MarketplaceFrontController {
     }
 
 
+    public void browseItems() throws RemoteException {
+
+        //TODO: Browse functionality to be implemented
+        dispatcher.dispatch("BROWSE",null);
+    }
 }

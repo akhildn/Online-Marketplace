@@ -7,8 +7,12 @@ public class ErrorViewFactory extends AbstractFactoryView {
     @Override
     public MarketplaceView createView(String type) {
         MarketplaceView marketplaceView;
-        if(type.equals("PAGE_NOT_FOUND")){
+        if(type.equals("INVALID_CREDENTIALS")){
             marketplaceView = new LoginErrorView();
+            return marketplaceView;
+        }
+        else if(type.equals("PAGE_NOT_FOUND")){
+            marketplaceView = new PageNotFoundView();
             return marketplaceView;
         }
         else{

@@ -8,11 +8,11 @@ public class HomeViewFactory extends AbstractFactoryView {
     public MarketplaceView createView(String type) {
         MarketplaceView marketplaceView;
         if(type.equals("ADMIN")){
-            marketplaceView = new AdminView();
+            marketplaceView = new AdminHomeView();
             return marketplaceView;
         }
         else if(type.equals("CUSTOMER")){
-            marketplaceView = new CustomerView();
+            marketplaceView = new CustomerHomeView();
             return marketplaceView;
         }
         else{

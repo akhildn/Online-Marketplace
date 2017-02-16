@@ -14,6 +14,7 @@ import java.rmi.Naming;
 import java.util.Scanner;
 
 import com.iupui.marketplace.client.view.LoginView;
+import com.iupui.marketplace.client.view.MarketplaceView;
 import com.iupui.marketplace.controller.MarketplaceController;
 
 public class MarketplaceClient{
@@ -33,8 +34,8 @@ public class MarketplaceClient{
 		int connectionStatus = controller.connect();
             if(connectionStatus == 1){
             	System.out.println("Message from server: " + controller.welcomeMessage());
-				LoginView lv=new LoginView(fc);
-				lv.show();
+				MarketplaceView mv=new LoginView(fc);
+				mv.show();
             }
 
 		} catch(Exception e){
