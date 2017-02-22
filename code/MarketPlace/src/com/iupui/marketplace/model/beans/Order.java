@@ -3,6 +3,7 @@ package com.iupui.marketplace.model.beans;
 import java.sql.Time;
 import java.util.List;
 
+// Ryan: Please include usefull comments in each file.
 public class Order {
 	private int orderId;
 	private Time orderDate;

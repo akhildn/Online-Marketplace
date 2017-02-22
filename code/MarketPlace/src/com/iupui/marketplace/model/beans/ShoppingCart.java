@@ -2,6 +2,7 @@ package com.iupui.marketplace.model.beans;
 
 import java.util.List;
 
+// Ryan: make sure to include useful comments in each file.
 public class ShoppingCart {
 	private int cartId;
 	private double cartTotal;

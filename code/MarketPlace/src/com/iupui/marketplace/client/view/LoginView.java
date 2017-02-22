@@ -9,6 +9,7 @@ import com.iupui.marketplace.client.commands.CommandInvoker;
 import com.iupui.marketplace.client.commands.LoginCommand;
 import com.iupui.marketplace.client.commands.MarketplaceCommand;
 
+// Ryan: Please include usefull comments in each file.
 public class LoginView implements MarketplaceView{
  //TODO:
 

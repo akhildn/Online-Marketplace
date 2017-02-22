@@ -12,6 +12,7 @@ import java.rmi.RemoteException;
  * Created by anaya on 2/12/2017.
  */
 
+ // Ryan: Please include usefull comments in each file.
 public class MarketplaceDispatcher {
 
     public void dispatch(String page, Account account) throws RemoteException {

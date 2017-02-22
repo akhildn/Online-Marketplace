@@ -10,6 +10,7 @@ import java.rmi.Naming;
 import com.iupui.marketplace.controller.MarketplaceController;
 import com.iupui.marketplace.controller.MarketplaceControllerImpl;
 
+// Ryan: Make sure to include useful comments in each file.
 public class MarketplaceServer  {
 
 	private static final long serialVersionUID = 1L;

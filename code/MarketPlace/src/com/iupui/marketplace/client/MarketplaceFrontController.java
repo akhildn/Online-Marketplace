@@ -5,6 +5,7 @@ import com.iupui.marketplace.model.beans.Account;
 
 import java.rmi.RemoteException;
 
+// Ryan: Please include usefull comments in each file.
 public class MarketplaceFrontController {
 
     private boolean isAuthenticate;

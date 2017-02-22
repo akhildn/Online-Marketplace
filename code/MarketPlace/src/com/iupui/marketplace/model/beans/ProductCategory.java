@@ -1,5 +1,6 @@
 package com.iupui.marketplace.model.beans;
 
+// Ryan: Please include usefull comments in each file.
 public class ProductCategory {
 	private int categoryId;
 	private String categoryName;

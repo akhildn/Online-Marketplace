@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 /**
  * Created by anaya on 2/16/2017.
  */
+ // Ryan: Please include usefull comments in each file.
 public class BrowseHandler implements MarketplaceHandler {
 
     private  MarketplaceFrontController controller;

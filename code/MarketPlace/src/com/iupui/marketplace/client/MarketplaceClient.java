@@ -17,6 +17,7 @@ import com.iupui.marketplace.client.view.LoginView;
 import com.iupui.marketplace.client.view.MarketplaceView;
 import com.iupui.marketplace.controller.MarketplaceController;
 
+// Ryan: Please include usefull comments in each file.
 public class MarketplaceClient{
 
 	public static void main(String args[]){

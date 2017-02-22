@@ -9,6 +9,7 @@ import com.iupui.marketplace.model.beans.Account;
 import com.iupui.marketplace.model.beans.Product;
 import com.iupui.marketplace.model.beans.ProductCategory;
 
+// Ryan: Please include usefull comments in each file.
 public class MarketplaceControllerImpl extends UnicastRemoteObject implements MarketplaceController {
 	
 

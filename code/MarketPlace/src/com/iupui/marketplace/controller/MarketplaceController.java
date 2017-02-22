@@ -12,8 +12,12 @@ import com.iupui.marketplace.model.beans.Account;
 import com.iupui.marketplace.model.beans.Product;
 import com.iupui.marketplace.model.beans.ProductCategory;
 
+// Ryan: Please include usefull comments in each file.
 public interface MarketplaceController extends java.rmi.Remote {
 	public int connect() throws RemoteException;
+	
+	// Ryan: I am guessing this is just for this assignment - otherwise the method below could handle 
+	// functionality.
 	public String welcomeMessage() throws RemoteException;
 	public Account handleLogin(String username, String password) throws RemoteException;
 	public List<Product> handleBrowseItems() throws RemoteException;

@@ -4,6 +4,7 @@ import com.iupui.marketplace.model.beans.Account;
 
 import java.util.HashMap;
 
+// Ryan: Please include usefull comments in each file.
 public class AccountDAO {
 
     HashMap<String, Account> userDataMap;

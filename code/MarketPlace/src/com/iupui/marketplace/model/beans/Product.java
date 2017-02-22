@@ -2,6 +2,7 @@ package com.iupui.marketplace.model.beans;
 
 import java.util.List;
 
+// Ryan: Please include usefull comments in each file.
 public class Product {
 	private int productId;
 	private String productName;
