@@ -9,7 +9,11 @@ import java.rmi.RemoteException;
  * Created by anaya on 2/16/2017.
  */
  
- // Ryan: Please include usefull comments in each file.
+ 
+ // Ryan: Please include useful comments in each file.
+ // Fixed: Comments included in each file.
+ 
+ // Concrete Command
 public class BrowseCommand implements MarketplaceCommand {
 
     MarketplaceHandler handler;

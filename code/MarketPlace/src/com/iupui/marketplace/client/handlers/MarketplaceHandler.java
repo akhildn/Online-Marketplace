@@ -8,6 +8,9 @@ import java.rmi.RemoteException;
  */
  
  // Ryan: Please include usefull comments in each file.
+ // Fixed: Comments are provided in each file.
+ 
+ // Command Pattern Receiver Interface.
 public interface MarketplaceHandler {
     public void handleRequest() throws RemoteException;
 }

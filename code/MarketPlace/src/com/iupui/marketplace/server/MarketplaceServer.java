@@ -11,6 +11,7 @@ import com.iupui.marketplace.controller.MarketplaceController;
 import com.iupui.marketplace.controller.MarketplaceControllerImpl;
 
 // Ryan: Make sure to include useful comments in each file.
+// Fixed: Comments are included in each file.
 public class MarketplaceServer  {
 
 	private static final long serialVersionUID = 1L;
@@ -20,13 +21,11 @@ public class MarketplaceServer  {
 			
             System.out.println("Creating a Marketplace Server!");
 			MarketplaceController controller = new MarketplaceControllerImpl();
+			
+			// Binds the Server to the RMI Service.
             Naming.rebind("//tesla.cs.iupui.edu:2010/MarketPlace", controller);         
             
-	/*	Registry registry= LocateRegistry.createRegistry(2005);
-            MarketplaceController controller= new MarketplaceControllerImpl();
-            registry.rebind("controller", controller);
-	*/		
-            System.out.println("Marketplace Server Ready!");
+	        System.out.println("Marketplace Server Ready!");
 		} catch (Exception e){
 			System.out.println("Exception: " + e.getMessage());
 			e.printStackTrace();
