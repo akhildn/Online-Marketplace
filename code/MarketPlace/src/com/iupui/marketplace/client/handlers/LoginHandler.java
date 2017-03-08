@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
  */
  
  // Ryan: Please include usefull comments in each file.
+ // Fixed: Comments are included in each file.
+ 
+ // Command Receiver
 public class LoginHandler implements MarketplaceHandler {
 
     private String uname;
@@ -34,7 +37,7 @@ public class LoginHandler implements MarketplaceHandler {
         this.pass = pass;
     }
 
-
+	//  Passes username and password to authenticate method of front controller where authentication is initiated.
     public void handleRequest() throws RemoteException {
         frontController.authenticate(this.uname, this.pass);
     }

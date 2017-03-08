@@ -13,7 +13,6 @@ import java.util.Scanner;
  */
 public class AdminHomeView implements MarketplaceView {
 
-
     public void show(){
         System.out.println("Welcome to Admin view");
     }

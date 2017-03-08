@@ -9,6 +9,9 @@ import java.rmi.RemoteException;
  */
  
  // Ryan: Please include usefull comments in each file.
+ // Fixed: Comments are included in each file.
+ 
+ // Concrete Command
 public class LoginCommand implements MarketplaceCommand {
 
     MarketplaceHandler handler;

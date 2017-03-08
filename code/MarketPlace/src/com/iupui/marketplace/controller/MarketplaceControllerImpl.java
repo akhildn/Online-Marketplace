@@ -10,28 +10,24 @@ import com.iupui.marketplace.model.beans.Product;
 import com.iupui.marketplace.model.beans.ProductCategory;
 
 // Ryan: Please include usefull comments in each file.
+// Fixed: Comments are included in each file.
 public class MarketplaceControllerImpl extends UnicastRemoteObject implements MarketplaceController {
 	
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public MarketplaceControllerImpl() throws RemoteException{}
+
+	// to check if connection was made
 	@Override
 	public int connect() throws RemoteException {
 		return 1;
 	}
-
-	@Override
-	public String welcomeMessage() throws RemoteException {
-		return "Welcome IUPUI OOAD Marketplace !!!";
-	}
-
+	
+	// Login Handler : checks user credentials are valid or not, if valid returns user details.
 	@Override
 	public Account handleLogin(String username, String password) throws RemoteException {
 		AccountDAO	accountDAO = new AccountDAO();
+		// Below method checks if entered credentials are actually valid.
 		boolean isValid = accountDAO.validateCredentials(username,password);
 		if(isValid){
 			 return accountDAO.getAccountDetails(username);
@@ -39,6 +35,8 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 		return null;
 	}
 
+
+	//TODO : All the below methods are yet to be implemented
 	@Override
 	public List<Product> handleBrowseItems() throws RemoteException {
 		// TODO Auto-generated method stub

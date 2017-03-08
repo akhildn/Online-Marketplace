@@ -18,24 +18,19 @@ import com.iupui.marketplace.client.view.MarketplaceView;
 import com.iupui.marketplace.controller.MarketplaceController;
 
 // Ryan: Please include usefull comments in each file.
+// Fixed: Comments are included in each file.
 public class MarketplaceClient{
 
 	public static void main(String args[]){
 
-		try {
-
-        /*    Registry registry = LocateRegistry.getRegistry("tesla.cs.iupui.edu",2005);
-            MarketplaceController controller= (MarketplaceController) registry.lookup("controller");
-         */
-
-		String username,password;
+		try {   
 		Scanner in = new Scanner(System.in);
+		// To locate the Marketplace server.
 		MarketplaceController controller= (MarketplaceController) Naming.lookup("//tesla.cs.iupui.edu:2010/MarketPlace");
 		MarketplaceFrontController fc=new MarketplaceFrontController(controller);
-		int connectionStatus = controller.connect();
+		int connectionStatus = controller.connect(); 	// to check if connection to the server has been made.
             if(connectionStatus == 1){
-            	System.out.println("Message from server: " + controller.welcomeMessage());
-				MarketplaceView mv=new LoginView(fc);
+				MarketplaceView mv=new LoginView(fc);	// calls the initial view if connection is successful
 				mv.show();
             }
 
