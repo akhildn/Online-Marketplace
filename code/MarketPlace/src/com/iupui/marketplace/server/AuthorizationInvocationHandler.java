@@ -21,11 +21,14 @@ public class AuthorizationInvocationHandler implements InvocationHandler, Serial
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // when invoked method has an annotation to it.
         if (method.isAnnotationPresent(RequiresRole.class)) {
+
             RequiresRole test = method.getAnnotation(RequiresRole.class);
+
            // System.out.println("test :" + test.value());
             Account account = (Account) args[0]; // gets the accountType since account type is passed as 1st argument
            // System.out.println("account type :" + account.getUserType());
             userType = account.getUserType();
+
             // checks if the user has access to the method by checking with role specified in the annotations
             if (userType.equals(test.value())) {
                 // if annotation role and userType matches following method is called

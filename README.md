@@ -1,3 +1,59 @@
+﻿Assignment #3
+Given Task: In Assignment #3 you will build upon and improve the existing framework that you have created in Assignments #1 and #2 for our Marketplace App. For this particular assignment you will be expanding your application to make use of the Authorization pattern through a role-based access control (RBAC) approach that will make use of Java Annotations. As part of this process you will also implement and explore further the Proxy pattern and the Reflection pattern within the Java programming language. As with Assignment #2, for right now we will consider the two roles within the application to be two distinct roles – meaning an administrator account cannot act like a customer account – if the same individual wants to play both roles he/she must have two separate accounts – although with the use of annotations this could be accommodated in the future. All of the other requirements are still valid.
+
+Directory Structur:
+.
+├── code
+│   └── MarketPlace
+│       ├── nbproject
+│       │   └── private
+│       └── src
+│           └── com
+│               └── iupui
+│                   └── marketplace
+│                       ├── client
+│                       │   ├── command
+│                       │   ├── commands
+│                       │   ├── handlers
+│                       │   └── view
+│                       ├── controller
+│                       ├── dao
+│                       ├── model
+│                       │   └── beans
+│                       └── server
+└── docs
+
+Compilation through make file:
+-go to csci50700_spring2017_marketplace/code/MarketPlace/src/ 
+$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/
+-run make
+$ make
+
+Execution Instructions:
+make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
+-run rmiregistry since 2010 is hard coded as port use 2010 use 2010 for rmiregistry
+$ rmiregistry 2010
+-run the server (in duplicated session)
+$ java com.iupui.marketplace.server.MarketplaceServer
+-run client (in another duplicated session)
+$ java com.iupui.marketplace.client.MarketplaceClient
+
+
+Credentials:
+
+For customer view:
+username: customer
+password: customer
+
+For admin view:
+username: admin
+password: admin
+
+Both admin and customer have same Browse View, press 1 for browse view 
+Customer does not have access to edit items in browse view 
+Admin does not have access to add items to cart in browse view 
+__________________________________________________________________________________________________________________________________________
+
 Assignment #2
 Given Task: For Assignment #2 your job is to build upon and improve the existing framework that you have created in Assignment #1. For this particular assignment you will be looking at an important Application Control pattern that can be applied to the Model-View-Control architecture that you defined in the first assignment. For this you will be focused on the impact that the role and place that Controllers have on the system specifically looking at the Front Controller pattern with regards to how it can be implemented as part of your existing Marketplace application. We will also be partially implementing the logic for the Login requirement. As outlined, this function should be included for both Administrators as well as Customers – however, each should see a distinctly different view. In order to accomplish this implementation and realize its full potential, we will be making use of two additional, yet related, patterns: the Command and the Abstract Factory patterns. In Assignment #3 we will focus on the login and role-based access to our application and compare this solution with an alternative approach. All of the other requirements are still valid. Any updates to your design should be reflected in an updated domain model and any updated discussion of design decisions should be made. You also need to ensure that any changes necessary from Assignment #1 are made as part of this assignment. 
 
@@ -22,7 +78,7 @@ Directory Structure:
 │                       └── server
 └── docs
 
-Compilation through make file
+Compilation through make file:
 -go to csci50700_spring2017_marketplace/code/MarketPlace/src/ 
 $ cd csci50700_spring2017_marketplace/code/MarketPlace/src/
 -run make

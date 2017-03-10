@@ -74,14 +74,19 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 		return null;
 	}
 
+	// Will return true when entered, only admin can use this method
 	@Override
-	public void handleEditItemName(Account account, int productId, String productName) throws RemoteException {
-		System.out.println("Item Edited by "+account.getUsername());
+	public boolean handleEditItemName(Account account, int productId, String productName) throws RemoteException {
+		/* System.out.println( productId + " will be edited and edit is done by "+account.getUsername()); */
+		return true;
+
 	}
 
+	// Will return true when entered, only customer can use this method
 	@Override
-	public void handleAddToCart(Account account, int productId, int quantity) throws RemoteException {
-		System.out.println("Item Added to cart ");
+	public boolean handleAddToCart(Account account, int productId, int quantity) throws RemoteException {
+		// System.out.println( productId + " has been  added to cart ");
+		return true;
 	}
 
 }

@@ -14,6 +14,7 @@ public class MarketplaceFrontController {
     private boolean isAuthenticate; // set to true when authenticate is successfull
     private MarketplaceDispatcher dispatcher;
     private MarketplaceController controller;
+    boolean isAuthorized;
 
     public MarketplaceFrontController(MarketplaceController controller){
         this.controller = controller;
@@ -58,11 +59,14 @@ public class MarketplaceFrontController {
         dispatcher.dispatch("BROWSE",null, this);
     }
 
+
     // communicates with handleEditItemName in the server.
     public void editItems() throws RemoteException {
         try{
-         System.out.print("enter edit");
-        controller.handleEditItemName(session,123,"New_Name");
+            isAuthorized = controller.handleEditItemName(session,123,"New_Name");
+            if(isAuthorized){
+                System.out.println(" Edited by "+session.getUsername());
+            }
         }catch (Exception e){
             System.out.println("Authorization Exception : "+e.getMessage());
         }
@@ -71,7 +75,10 @@ public class MarketplaceFrontController {
     // communicates with handleAddToCart in the server.
     public void addCart() throws RemoteException {
         try {
-            controller.handleAddToCart(session, 123, 1);
+            isAuthorized = controller.handleAddToCart(session, 123, 1);
+            if(isAuthorized){
+                System.out.println(" Added to cart of "+session.getUsername());
+            }
         }catch (Exception e){
             System.out.println("Authorization Exception : "+e.getMessage());
         }

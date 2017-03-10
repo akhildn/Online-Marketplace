@@ -36,7 +36,7 @@ public interface MarketplaceController extends java.rmi.Remote {
 
 	// Methods with annotations for assignment#3
 	@RequiresRole("ADMIN")
-	public void handleEditItemName(Account account,int productId,String productName) throws RemoteException;
+	public boolean handleEditItemName(Account account,int productId,String productName) throws RemoteException;
 	@RequiresRole("CUSTOMER")
-	public void handleAddToCart(Account account,int productId, int quantity) throws	RemoteException;
+	public boolean handleAddToCart(Account account,int productId, int quantity) throws	RemoteException;
 }
