@@ -8,9 +8,10 @@ CLASSES = \
 	com/iupui/marketplace/model/beans/*.java \
 	com/iupui/marketplace/controller/*.java \
 	com/iupui/marketplace/client/MarketplaceClient.java \
-	com/iupui/marketplace/client/commands/*.java \
+	com/iupui/marketplace/client/command/*.java \
 	com/iupui/marketplace/client/handlers/*.java \
 	com/iupui/marketplace/client/view/*.java \
+	com/iupui/marketplace/server/MarketplaceServer.java \
 	com/iupui/marketplace/server/*.java 
 
 default:  clean classes
