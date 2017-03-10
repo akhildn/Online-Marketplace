@@ -1,20 +1,39 @@
 package com.iupui.marketplace.client.view;
 
 import com.iupui.marketplace.client.MarketplaceFrontController;
-import com.iupui.marketplace.client.commands.BrowseCommand;
-import com.iupui.marketplace.client.commands.CommandInvoker;
-import com.iupui.marketplace.client.commands.MarketplaceCommand;
+import com.iupui.marketplace.client.command.BrowseCommand;
+import com.iupui.marketplace.client.command.CommandInvoker;
+import com.iupui.marketplace.client.command.MarketplaceCommand;
 import com.iupui.marketplace.client.handlers.BrowseHandler;
 
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 /**
  * Created by anaya on 2/10/2017.
  */
+
+// Admin view
 public class AdminHomeView implements MarketplaceView {
 
-    public void show(){
-        System.out.println("Welcome to Admin view");
+    private MarketplaceFrontController fc;
+    public AdminHomeView(MarketplaceFrontController fc)  {
+        this.fc=fc;
     }
 
+    public void show() throws RemoteException {
+        BrowseHandler handler = new BrowseHandler(fc);
+        System.out.println("Welcome to Admin view");
+        System.out.println("1. Browse Items");
+        System.out.println("Enter choice :");
+        int choice;
+        Scanner in= new Scanner(System.in);
+        choice = in.nextInt();
+        // Browse Command will be invoked
+        if(choice==1){
+            MarketplaceCommand command = new BrowseCommand(handler);
+            CommandInvoker invoker = new CommandInvoker();
+            invoker.invoke(command);
+        }
+    }
 }

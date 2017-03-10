@@ -11,7 +11,7 @@ CLASSES = \
 	com/iupui/marketplace/client/commands/*.java \
 	com/iupui/marketplace/client/handlers/*.java \
 	com/iupui/marketplace/client/view/*.java \
-	com/iupui/marketplace/server/MarketplaceServer.java 
+	com/iupui/marketplace/server/*.java 
 
 default:  clean classes
 

@@ -7,11 +7,10 @@ import java.rmi.RemoteException;
 /**
  * Created by anaya on 2/16/2017.
  */
- 
  // Ryan: Please include useful comments in each file.
- // Fixed: Commands are included in each file.
- 
- //Command receviver 
+ // Fixed: Comments are included in each file
+
+ // Command Receiver
 public class BrowseHandler implements MarketplaceHandler {
 
     private  MarketplaceFrontController controller;
@@ -19,7 +18,6 @@ public class BrowseHandler implements MarketplaceHandler {
         this.controller = controller;
     }
 
-	
     @Override
     public void handleRequest() throws RemoteException {
         controller.browseItems();

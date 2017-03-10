@@ -9,10 +9,11 @@ import com.iupui.marketplace.model.beans.Account;
 import com.iupui.marketplace.model.beans.Product;
 import com.iupui.marketplace.model.beans.ProductCategory;
 
-// Ryan: Please include usefull comments in each file.
+// Ryan: Please include useful comments in each file.
 // Fixed: Comments are included in each file.
 public class MarketplaceControllerImpl extends UnicastRemoteObject implements MarketplaceController {
 	
+
 	private static final long serialVersionUID = 1L;
 
 	public MarketplaceControllerImpl() throws RemoteException{}
@@ -22,8 +23,8 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	public int connect() throws RemoteException {
 		return 1;
 	}
-	
-	// Login Handler : checks user credentials are valid or not, if valid returns user details.
+
+	// Login Handler : checks user credentials are valid or not.
 	@Override
 	public Account handleLogin(String username, String password) throws RemoteException {
 		AccountDAO	accountDAO = new AccountDAO();
@@ -71,6 +72,16 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	public Product handlegetProductDetails(int productId) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void handleEditItemName(Account account, int productId, String productName) throws RemoteException {
+		System.out.println("Item Edited by "+account.getUsername());
+	}
+
+	@Override
+	public void handleAddToCart(Account account, int productId, int quantity) throws RemoteException {
+		System.out.println("Item Added to cart ");
 	}
 
 }

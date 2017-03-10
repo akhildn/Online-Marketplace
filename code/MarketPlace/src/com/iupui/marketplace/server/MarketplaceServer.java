@@ -6,6 +6,7 @@
 package com.iupui.marketplace.server;
 
 import java.rmi.Naming;
+import java.lang.reflect.Proxy;
 
 import com.iupui.marketplace.controller.MarketplaceController;
 import com.iupui.marketplace.controller.MarketplaceControllerImpl;
@@ -20,12 +21,16 @@ public class MarketplaceServer  {
 		try{
 			
             System.out.println("Creating a Marketplace Server!");
-			MarketplaceController controller = new MarketplaceControllerImpl();
-			
+
+            // Refection and proxy
+            MarketplaceController controller = (MarketplaceController) Proxy.newProxyInstance(MarketplaceController.class.getClassLoader(),
+				    new Class<?>[] {MarketplaceController.class},
+                    new AuthorizationInvocationHandler(new MarketplaceControllerImpl()));
+
 			// Binds the Server to the RMI Service.
             Naming.rebind("//tesla.cs.iupui.edu:2010/MarketPlace", controller);         
             
-	        System.out.println("Marketplace Server Ready!");
+            System.out.println("Marketplace Server Ready!");
 		} catch (Exception e){
 			System.out.println("Exception: " + e.getMessage());
 			e.printStackTrace();
