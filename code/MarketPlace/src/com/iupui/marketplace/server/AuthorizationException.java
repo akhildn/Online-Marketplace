@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by anaya on 3/6/2017.
  */
 
-
+//Ryan: Please include comments in each file.
 public class AuthorizationException extends RuntimeException implements Serializable {
     private static final long serialVersionUID = 5528415690278423524L;
 
