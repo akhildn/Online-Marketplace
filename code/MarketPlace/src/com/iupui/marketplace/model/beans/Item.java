@@ -1,7 +1,9 @@
 package com.iupui.marketplace.model.beans;
 
+import java.io.Serializable;
+
 // Ryan: Please include usefull comments in each file.
-public class Item {
+public class Item implements Serializable{
 	private Product product;
 	private int quantity;
 	private double totalItemPrice;

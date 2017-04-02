@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 
 // Command Invoker.
 public class CommandInvoker {
+
     public void invoke(MarketplaceCommand command) throws RemoteException {
         command.execute();
     }

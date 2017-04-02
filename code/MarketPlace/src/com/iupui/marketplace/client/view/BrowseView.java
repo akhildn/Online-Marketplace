@@ -1,8 +1,15 @@
 package com.iupui.marketplace.client.view;
 
 import com.iupui.marketplace.client.MarketplaceFrontController;
+import com.iupui.marketplace.client.command.CommandInvoker;
+import com.iupui.marketplace.client.command.MarketplaceCommand;
+import com.iupui.marketplace.client.command.ProductDetailCommand;
+import com.iupui.marketplace.client.handlers.ProductDetailHandler;
+import com.iupui.marketplace.model.beans.Product;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -13,31 +20,52 @@ import java.util.Scanner;
 // Browse View
 public class BrowseView implements  MarketplaceView{
 
+    private List<Product> productList;
     private MarketplaceFrontController frontController;
     public BrowseView(MarketplaceFrontController frontController){
         this.frontController = frontController;
     }
     @Override
     public void show() throws RemoteException {
+
+
+        int itemCount = productList.size();
+        System.out.println("********************\tBrowse View\t********************");
         System.out.println("Items:");
-        System.out.println("Pid_1. Item_one");
-        System.out.println();
-        System.out.println("1.Edit item");
-        System.out.println("2.Add to cart");
-        System.out.println("enter a choice");
-        int choice;
-        Scanner in = new Scanner(System.in);
-        choice = in.nextInt();
-        // Only admin has access to this method
-        if(choice==1){
-            frontController.editItems();
+        for(int i=0;i<itemCount;i++){
+            System.out.println((i+1) + "." + productList.get(i).getProductName());
         }
-        // Only customer has access to this method
-        else if (choice==2){
-            frontController.addCart();
+        System.out.println("Enter serial number of product for more details  or type home to go to home screen : ");
+        Scanner in = new Scanner(System.in);
+        String choice = in.next();
+
+        if(choice.equalsIgnoreCase("home")){
+            frontController.homeRedirect();
         }
         else{
+            if(choice.matches("[0-9)]+")) {
+                int ch = Integer.parseInt(choice);
+                if (ch > itemCount) {
+                    System.out.println(".............Notice..................");
+                    System.out.println("Invalid Serial Number");
+                    show();
+                } else {
+                    Product product = productList.get(ch - 1);
+                    ProductDetailHandler handler = new ProductDetailHandler(frontController, product.getProductId());
+                    MarketplaceCommand command = new ProductDetailCommand(handler);
+                    CommandInvoker invoker = new CommandInvoker();
+                    invoker.invoke(command);
+                }
+            }else{
+                System.out.println(".............Notice..................");
+                System.out.println("Enter an integer for product serial number");
+                show();
+            }
 
         }
+    }
+
+    public void bindData(List<Product> productList){
+        this.productList = productList;
     }
 }

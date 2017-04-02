@@ -1,12 +1,33 @@
 package com.iupui.marketplace.model.beans;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 // Ryan: make sure to include useful comments in each file.
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
 	private int cartId;
 	private double cartTotal;
 	private List<Item> cartItems;
+	private String userName;
+
+	public ShoppingCart(){
+		cartItems = new ArrayList<>();
+		cartTotal =0;
+	}
+	
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	/**
 	 * @return the cartId
 	 */

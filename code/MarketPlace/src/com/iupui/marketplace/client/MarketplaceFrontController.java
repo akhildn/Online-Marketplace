@@ -2,9 +2,11 @@ package com.iupui.marketplace.client;
 
 import com.iupui.marketplace.controller.MarketplaceController;
 import com.iupui.marketplace.model.beans.Account;
-import com.iupui.marketplace.server.AuthorizationException;
+import com.iupui.marketplace.model.beans.Product;
+import com.iupui.marketplace.model.beans.ShoppingCart;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 // Ryan: Please include useful comments in each file.
 //Fixed: Comments are included in each file.
@@ -14,7 +16,7 @@ public class MarketplaceFrontController {
     private boolean isAuthenticate; // set to true when authenticate is successfull
     private MarketplaceDispatcher dispatcher;
     private MarketplaceController controller;
-    boolean isAuthorized;
+    boolean onSuccess;
 
     public MarketplaceFrontController(MarketplaceController controller){
         this.controller = controller;
@@ -56,31 +58,49 @@ public class MarketplaceFrontController {
 
 
     public void browseItems() throws RemoteException {
-        dispatcher.dispatch("BROWSE",null, this);
+        if(isAuthenticate) {
+            List<Product> productList;
+            productList = controller.handleBrowseItems();
+            dispatcher.dispatch("BROWSE", productList, this);
+        }
+        //TODO : is not authenticated display page not found
     }
 
 
-    // communicates with handleEditItemName in the server.
-    public void editItems() throws RemoteException {
-        try{
-            isAuthorized = controller.handleEditItemName(session,123,"New_Name");
-            if(isAuthorized){
-                System.out.println(" Edited by "+session.getUsername());
-            }
-        }catch (Exception e){
-            System.out.println("Authorization Exception : "+e.getMessage());
+    public void productDetails(int productId) throws RemoteException {
+        if(isAuthenticate){
+            Product product= controller.handlegetProductDetails(productId);
+            dispatcher.dispatch("PRODUCT_DETAILS", product, this);
         }
     }
 
-    // communicates with handleAddToCart in the server.
-    public void addCart() throws RemoteException {
-        try {
-            isAuthorized = controller.handleAddToCart(session, 123, 1);
-            if(isAuthorized){
-                System.out.println(" Added to cart of "+session.getUsername());
+
+    public void addCart(Product product, int quantity) throws RemoteException {
+        if(isAuthenticate){
+            boolean isAdded = controller.handleAddToCart(session,product,quantity);
+            if(isAdded){
+                ShoppingCart shoppingCart = controller.handleGetCartDetails(session);
+                dispatcher.dispatch("CART_VIEW", shoppingCart, this);
             }
-        }catch (Exception e){
-            System.out.println("Authorization Exception : "+e.getMessage());
         }
+    }
+
+    public void homeRedirect() throws RemoteException {
+        dispatcher.dispatch("HOME", session, this);
+    }
+
+    public void addItemView() throws RemoteException {
+        if(isAuthenticate){
+            dispatcher.dispatch("ADD_ITEM", null, this);
+        }
+    }
+
+
+    public boolean addItem(Product product) throws RemoteException {
+        if(isAuthenticate){
+            boolean isProductAdded = controller.handleAddItem(session, product);
+            return isProductAdded;
+        }
+        return false;
     }
 }

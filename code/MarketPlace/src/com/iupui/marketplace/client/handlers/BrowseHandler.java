@@ -1,6 +1,7 @@
 package com.iupui.marketplace.client.handlers;
 
 import com.iupui.marketplace.client.MarketplaceFrontController;
+import com.iupui.marketplace.model.beans.Product;
 
 import java.rmi.RemoteException;
 

@@ -1,9 +1,11 @@
 package com.iupui.marketplace.client.view;
 
 import com.iupui.marketplace.client.MarketplaceFrontController;
+import com.iupui.marketplace.client.command.AddItemCommand;
 import com.iupui.marketplace.client.command.BrowseCommand;
 import com.iupui.marketplace.client.command.CommandInvoker;
 import com.iupui.marketplace.client.command.MarketplaceCommand;
+import com.iupui.marketplace.client.handlers.AddItemHandler;
 import com.iupui.marketplace.client.handlers.BrowseHandler;
 
 import java.rmi.RemoteException;
@@ -22,18 +24,30 @@ public class AdminHomeView implements MarketplaceView {
     }
 
     public void show() throws RemoteException {
-        BrowseHandler handler = new BrowseHandler(fc);
         System.out.println("Welcome to Admin view");
         System.out.println("1. Browse Items");
+        System.out.println("2. Add Items");
         System.out.println("Enter choice :");
         int choice;
         Scanner in= new Scanner(System.in);
         choice = in.nextInt();
         // Browse Command will be invoked
-        if(choice==1){
+        if(choice == 1){
+            BrowseHandler handler = new BrowseHandler(fc);
             MarketplaceCommand command = new BrowseCommand(handler);
             CommandInvoker invoker = new CommandInvoker();
             invoker.invoke(command);
+        }
+        else if(choice == 2 ){
+            AddItemHandler handler = new AddItemHandler(fc);
+            MarketplaceCommand command = new AddItemCommand(handler);
+            CommandInvoker invoker = new CommandInvoker();
+            invoker.invoke(command);
+        }
+        else{
+            System.out.println(".........................Notice.........................");
+            System.out.println("invalid choice");
+            show();
         }
     }
 }

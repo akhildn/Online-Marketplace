@@ -1,10 +1,17 @@
 package com.iupui.marketplace.client.view;
 
+import com.iupui.marketplace.client.MarketplaceFrontController;
+
 /**
  * Created by anaya on 2/14/2017.
  */
 
 public class ErrorViewFactory extends MarketplaceViewAbstractFactory {
+    private MarketplaceFrontController frontController;
+    public ErrorViewFactory(MarketplaceFrontController frontController) {
+        this.frontController = frontController;
+    }
+
     @Override
     public MarketplaceView getView(String type) {
         MarketplaceView marketplaceView;
@@ -15,7 +22,7 @@ public class ErrorViewFactory extends MarketplaceViewAbstractFactory {
             return marketplaceView;
         }
         else if(type.equals("PAGE_NOT_FOUND")){
-            marketplaceView = new PageNotFoundView();
+            marketplaceView = new PageNotFoundView(frontController);
             return marketplaceView;
         }
         else{
