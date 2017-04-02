@@ -48,7 +48,7 @@ public class AddItemView implements  MarketplaceView{
             boolean isSuccess = frontController.addItem(product);
             if(isSuccess){
                 System.out.println(".........................Alert.........................");
-                System.out.println("*********Item is Successfully added to inventory*************");
+                System.out.println("*********Item is Successfully added to inventory***********");
             }
             showHome();
         }

@@ -75,12 +75,16 @@ public class MarketplaceFrontController {
     }
 
 
+    public void handleViewCart() throws RemoteException {
+        ShoppingCart shoppingCart = controller.handleGetCartDetails(session);
+        dispatcher.dispatch("CART_VIEW", shoppingCart, this);
+    }
+
     public void addCart(Product product, int quantity) throws RemoteException {
         if(isAuthenticate){
             boolean isAdded = controller.handleAddToCart(session,product,quantity);
             if(isAdded){
-                ShoppingCart shoppingCart = controller.handleGetCartDetails(session);
-                dispatcher.dispatch("CART_VIEW", shoppingCart, this);
+                handleViewCart();
             }
         }
     }

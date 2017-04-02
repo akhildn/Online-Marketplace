@@ -48,6 +48,7 @@ public class BrowseView implements  MarketplaceView{
                 if (ch > itemCount) {
                     System.out.println(".............Notice..................");
                     System.out.println("Invalid Serial Number");
+                    System.out.println("........................................");
                     show();
                 } else {
                     Product product = productList.get(ch - 1);
@@ -59,6 +60,7 @@ public class BrowseView implements  MarketplaceView{
             }else{
                 System.out.println(".............Notice..................");
                 System.out.println("Enter an integer for product serial number");
+                System.out.println("........................................");
                 show();
             }
 

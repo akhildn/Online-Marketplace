@@ -47,6 +47,7 @@ public class AdminHomeView implements MarketplaceView {
         else{
             System.out.println(".........................Notice.........................");
             System.out.println("invalid choice");
+            System.out.println("........................................");
             show();
         }
     }

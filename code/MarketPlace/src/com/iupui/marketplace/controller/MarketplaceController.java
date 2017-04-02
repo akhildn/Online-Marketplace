@@ -44,6 +44,6 @@ public interface MarketplaceController extends java.rmi.Remote {
 	@RequiresRole("CUSTOMER")
 	public boolean handleAddToCart(Account account, Product product, int quantity) throws	RemoteException;
 
-	@RequiresRole("ADMIN")
+	@RequiresRole("CUSTOMER")
 	public ShoppingCart handleGetCartDetails(Account session)throws RemoteException;
 }
