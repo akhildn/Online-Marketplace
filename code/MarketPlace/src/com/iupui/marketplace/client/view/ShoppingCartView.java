@@ -1,6 +1,11 @@
 package com.iupui.marketplace.client.view;
 
 import com.iupui.marketplace.client.MarketplaceFrontController;
+import com.iupui.marketplace.client.command.CommandInvoker;
+import com.iupui.marketplace.client.command.MarketplaceCommand;
+import com.iupui.marketplace.client.command.PurchaseCommand;
+import com.iupui.marketplace.client.handlers.PurchaseHandler;
+import com.iupui.marketplace.model.beans.Address;
 import com.iupui.marketplace.model.beans.Item;
 import com.iupui.marketplace.model.beans.ShoppingCart;
 
@@ -48,14 +53,21 @@ public class ShoppingCartView implements MarketplaceView {
 
     public void nextView(boolean check) throws RemoteException {
         if (check) {
-            System.out.println("\n \n 1. Checkout");
+            System.out.println("\n \n 1. Purchase");
             System.out.println("\n \n 2. Home");
             System.out.println("Enter your choice:");
             int ch;
-            Scanner in = new Scanner(System.in);
+            Scanner in = new Scanner(System.in).useDelimiter("\\n");
             ch = in.nextInt();
             if (ch == 1 || ch == 2) {
                 if (ch == 1) {
+                    // shipping address popup
+                    Address shippingAddress =  shippingAddressPopUp(in);
+                    // calls purchase command
+                    PurchaseHandler purchaseHandler = new PurchaseHandler(frontController,shoppingCart,shippingAddress);
+                    MarketplaceCommand command = new PurchaseCommand(purchaseHandler);
+                    CommandInvoker invoker = new CommandInvoker();
+                    invoker.invoke(command);
 
                 } else {
                     frontController.homeRedirect();
@@ -63,6 +75,7 @@ public class ShoppingCartView implements MarketplaceView {
             } else {
                 System.out.println(".............Notice..................");
                 System.out.println("invalid choice");
+                System.out.println(".....................................");
                 show();
             }
         } else {
@@ -76,9 +89,27 @@ public class ShoppingCartView implements MarketplaceView {
             } else {
                 System.out.println(".............Notice..................");
                 System.out.println("invalid choice");
+                System.out.println(".....................................");
                 show();
             }
         }
+    }
+
+    private Address shippingAddressPopUp(Scanner in) {
+        System.out.println("Enter StreetAddress:");
+        String streetAdress = in.next();
+        System.out.println("Enter City:");
+        String city = in.next();
+        System.out.println("Enter State:");
+        String state = in.next();
+        System.out.println("Enter zip code:");
+        String zip = in.next();
+        Address shippingAddress = new Address();
+        shippingAddress.setStreetAddress(streetAdress);
+        shippingAddress.setCity(city);
+        shippingAddress.setState(state);
+        shippingAddress.setZip(zip);
+        return shippingAddress;
     }
 
     public boolean isCartEmpty() {

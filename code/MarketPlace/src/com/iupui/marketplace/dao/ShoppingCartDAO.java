@@ -42,4 +42,10 @@ public class ShoppingCartDAO {
         ShoppingCart shoppingCart = shoppingCartHashMap.get(account.getUsername());
         return shoppingCart;
     }
+
+    public void clearCart(String username) {
+        if(shoppingCartHashMap.get(username) != null){
+            shoppingCartHashMap.put(username,new ShoppingCart());
+        }
+    }
 }

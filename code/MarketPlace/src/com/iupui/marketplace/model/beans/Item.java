@@ -8,7 +8,22 @@ public class Item implements Serializable{
 	private int quantity;
 	private double totalItemPrice;
 	private boolean isAvailable;
+	private String statusMessage;
 	private boolean isNew;
+
+	/**
+	 * @return the statusMessage
+	 */
+	public String getStatusMessage() {
+		return statusMessage;
+	}
+
+	/**
+	 * @param statusMessage the statusMessage to set
+	 */
+	public void setStatusMessage(String statusMessage) {
+		this.statusMessage = statusMessage;
+	}
 	
 	/**
 	 * @return the product

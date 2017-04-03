@@ -35,8 +35,14 @@ public class CustomerHomeView implements MarketplaceView {
             CommandInvoker invoker = new CommandInvoker();
             invoker.invoke(command);
         }
-        if(choice==2){
+        else if(choice==2){
             frontController.handleViewCart();
+        }
+        else {
+            System.out.println("............................Notice!.......................");
+            System.out.println("Invalid choice");
+            System.out.println("..........................................................");
+            show();
         }
     }
 

@@ -1,18 +1,22 @@
 package com.iupui.marketplace.model.beans;
 
+import java.io.Serializable;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 // Ryan: Please include usefull comments in each file.
-public class Order {
+public class Order implements Serializable {
 	private int orderId;
-	private Time orderDate;
+	private Date orderDate;
 	private String shippingType;
 	private String orderStatus;
 	private double orderSubtotal;
 	private double tax;
 	private double orderTotal;
 	private List<Item> orderItems;
+	private Address shippingAddress;
 	
 	/**
 	 * @return the orderId
@@ -29,13 +33,13 @@ public class Order {
 	/**
 	 * @return the orderDate
 	 */
-	public Time getOrderDate() {
+	public Date getOrderDate() {
 		return orderDate;
 	}
 	/**
 	 * @param orderDate the orderDate to set
 	 */
-	public void setOrderDate(Time orderDate) {
+	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
 	/**
@@ -103,6 +107,14 @@ public class Order {
 	}
 	public void setOrderItems(List<Item> orderItems) {
 		this.orderItems = orderItems;
+	}
+
+	public Address getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(Address shippingAddress) {
+		this.shippingAddress = shippingAddress;
 	}
 	
 	

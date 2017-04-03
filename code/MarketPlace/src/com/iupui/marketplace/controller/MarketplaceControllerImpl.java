@@ -5,12 +5,10 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import com.iupui.marketplace.dao.AccountDAO;
+import com.iupui.marketplace.dao.OrderDAO;
 import com.iupui.marketplace.dao.ProductDAO;
 import com.iupui.marketplace.dao.ShoppingCartDAO;
-import com.iupui.marketplace.model.beans.Account;
-import com.iupui.marketplace.model.beans.Product;
-import com.iupui.marketplace.model.beans.ProductCategory;
-import com.iupui.marketplace.model.beans.ShoppingCart;
+import com.iupui.marketplace.model.beans.*;
 
 // Ryan: Please include useful comments in each file.
 // Fixed: Comments are included in each file.
@@ -21,10 +19,12 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
     AccountDAO accountDAO;
     ProductDAO productDAO;
     ShoppingCartDAO shoppingCartDAO;
+    OrderDAO orderDAO;
 	public MarketplaceControllerImpl() throws RemoteException{
        	this.accountDAO = new AccountDAO();
         this.productDAO = new ProductDAO();
         this.shoppingCartDAO = new ShoppingCartDAO();
+        this.orderDAO = new OrderDAO();
     }
 
 	// to check if connection was made
@@ -100,5 +100,13 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
     public ShoppingCart handleGetCartDetails(Account session)throws RemoteException {
         return shoppingCartDAO.handleGetCartDetials(session);
     }
+
+	@Override
+	public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException {
+		List<Item> orderItems = productDAO.processOrderItems(shoppingCart);
+		Order order = orderDAO.placeOrder(session, orderItems,shippingAddress);
+		shoppingCartDAO.clearCart(session.getUsername());
+		return order;
+	}
 
 }

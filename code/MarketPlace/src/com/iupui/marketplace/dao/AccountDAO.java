@@ -15,6 +15,7 @@ public class AccountDAO {
     public AccountDAO() {
         userDataMap = new HashMap<String, Account>();
         Account customer = new Account();
+        Account customer1= new Account();
         Account admin = new Account();
         customer.setEmail("abc@abc.com");
         customer.setPassword("customer");
@@ -23,13 +24,20 @@ public class AccountDAO {
         customer.setUserType("CUSTOMER");
 
 
+        customer1.setEmail("abc1@abc.com");
+        customer1.setPassword("customer1");
+        customer1.setSecurityAnswer("answerC");
+        customer1.setUsername("customer1");
+        customer1.setUserType("CUSTOMER");
+
+
         admin.setEmail("abc2@abc.com");
         admin.setPassword("admin");
         admin.setSecurityAnswer("answerA");
         admin.setUsername("admin");
         admin.setUserType("ADMIN");
 
-
+        userDataMap.put("customer1",customer1);
         userDataMap.put("customer", customer);
         userDataMap.put("admin", admin);
     }

@@ -8,10 +8,7 @@ package com.iupui.marketplace.controller;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import com.iupui.marketplace.model.beans.Account;
-import com.iupui.marketplace.model.beans.Product;
-import com.iupui.marketplace.model.beans.ProductCategory;
-import com.iupui.marketplace.model.beans.ShoppingCart;
+import com.iupui.marketplace.model.beans.*;
 import com.iupui.marketplace.server.RequiresRole;
 
 // Ryan: Please include useful comments in each file.
@@ -39,11 +36,15 @@ public interface MarketplaceController extends java.rmi.Remote {
 	public Product handlegetProductDetails(int productId) throws RemoteException;
 
 	// Methods with annotations for assignment#3
+	// Admin functions
 	@RequiresRole("ADMIN")
 	public boolean handleAddItem(Account account, Product product) throws RemoteException;
+
+	// Customer functions
 	@RequiresRole("CUSTOMER")
 	public boolean handleAddToCart(Account account, Product product, int quantity) throws	RemoteException;
-
 	@RequiresRole("CUSTOMER")
 	public ShoppingCart handleGetCartDetails(Account session)throws RemoteException;
+	@RequiresRole("CUSTOMER")
+    public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart,Address shippingAddress)throws RemoteException;
 }

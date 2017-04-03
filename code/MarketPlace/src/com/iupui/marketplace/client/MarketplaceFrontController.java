@@ -1,9 +1,7 @@
 package com.iupui.marketplace.client;
 
 import com.iupui.marketplace.controller.MarketplaceController;
-import com.iupui.marketplace.model.beans.Account;
-import com.iupui.marketplace.model.beans.Product;
-import com.iupui.marketplace.model.beans.ShoppingCart;
+import com.iupui.marketplace.model.beans.*;
 
 import java.rmi.RemoteException;
 import java.util.List;
@@ -106,5 +104,13 @@ public class MarketplaceFrontController {
             return isProductAdded;
         }
         return false;
+    }
+
+    public void handlePurchase(ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException {
+        if(isAuthenticate) {
+            Order order = controller.handlePlaceOrder(session, shoppingCart, shippingAddress);
+            dispatcher.dispatch("ORDER_CONFIRMATION", order, this);
+
+        }
     }
 }

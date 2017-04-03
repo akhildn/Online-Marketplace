@@ -2,6 +2,7 @@ package com.iupui.marketplace.client;
 
 import com.iupui.marketplace.client.view.*;
 import com.iupui.marketplace.model.beans.Account;
+import com.iupui.marketplace.model.beans.Order;
 import com.iupui.marketplace.model.beans.Product;
 import com.iupui.marketplace.model.beans.ShoppingCart;
 
@@ -55,6 +56,13 @@ public class MarketplaceDispatcher {
             else if (page.equals("INVALID_CREDENTIALS")) {
                 MarketplaceViewAbstractFactory factoryView = new ErrorViewFactory(frontController);
                 factoryView.getView(page).show();
+            }
+            else if (page.equals("ORDER_CONFIRMATION")){
+                MarketplaceViewAbstractFactory factoryView = new MarketplaceViewFactory(frontController);
+                OrderConfirmationView orderConfirmationView = (OrderConfirmationView)
+                        factoryView.getView("ORDER_CONFIRMATION");
+                orderConfirmationView.bindData((Order) object);
+                orderConfirmationView.show();
             }
         } catch (Exception ex) {
             MarketplaceViewAbstractFactory factoryView = new ErrorViewFactory(frontController);
