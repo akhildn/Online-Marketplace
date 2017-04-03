@@ -3,7 +3,8 @@ package com.iupui.marketplace.model.beans;
 import java.io.Serializable;
 import java.util.List;
 
-// Ryan: Please include usefull comments in each file.
+// Ryan: Please include useful comments in each file.
+//holds details of a product in the inventory
 public class Product implements Serializable {
 	private int productId;
 	private String productName;

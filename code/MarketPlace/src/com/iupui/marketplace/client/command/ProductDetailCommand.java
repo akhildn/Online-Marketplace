@@ -8,6 +8,8 @@ import java.rmi.RemoteException;
 /**
  * Created by anaya on 4/1/2017.
  */
+
+// Concrete Command
 public class ProductDetailCommand implements MarketplaceCommand {
 
     MarketplaceHandler handler;

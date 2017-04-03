@@ -15,6 +15,9 @@ import java.util.Scanner;
 /**
  * Created by anaya on 4/1/2017.
  */
+
+
+// Product detal view : view which displays all the information of selected product
 public class ProductDetailView implements MarketplaceView{
 
     private Product product;
@@ -47,9 +50,11 @@ public class ProductDetailView implements MarketplaceView{
         Scanner in = new Scanner(System.in);
         int choice = in.nextInt();
 
+        // if user wants to add this product to cart
         if(choice == 1){
             System.out.println("Enter Quantity:");
             int quantity = in.nextInt();
+            // checks if quantity user wants is valid i.e. less than what is in stock
             if(quantity <= unitCount){
                 AddCartHandler addCartHandler = new AddCartHandler(frontController,product,quantity);
                 MarketplaceCommand command = new AddCartCommand(addCartHandler);
@@ -62,6 +67,7 @@ public class ProductDetailView implements MarketplaceView{
                 show();
             }
         }
+        // goes back to browse view
         else if(choice == 2){
             BrowseHandler handler = new BrowseHandler(frontController);
             MarketplaceCommand command = new BrowseCommand(handler);

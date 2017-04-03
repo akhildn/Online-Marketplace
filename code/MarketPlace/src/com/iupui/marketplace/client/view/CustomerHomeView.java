@@ -25,6 +25,8 @@ public class CustomerHomeView implements MarketplaceView {
         System.out.println("Welcome to Customer view");
         System.out.println("1. Browse Items");
         System.out.println("2. View Cart");
+        System.out.println("3. Purchase History");
+        System.out.println("4. Logout");
         System.out.println("Enter choice :");
         int choice;
         Scanner in= new Scanner(System.in);
@@ -35,8 +37,17 @@ public class CustomerHomeView implements MarketplaceView {
             CommandInvoker invoker = new CommandInvoker();
             invoker.invoke(command);
         }
+        // call passes to front controller
         else if(choice==2){
             frontController.handleViewCart();
+        }
+        //call passes to front controller
+        else if(choice==3){
+           frontController.handlePurchaseHistory();
+        }
+        //process will be killed
+        else if(choice==4){
+            System.exit(0);
         }
         else {
             System.out.println("............................Notice!.......................");

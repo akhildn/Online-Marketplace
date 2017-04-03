@@ -9,6 +9,8 @@ import java.util.Scanner;
 /**
  * Created by anaya on 4/2/2017.
  */
+
+// Add item view : admin specific view
 public class AddItemView implements  MarketplaceView{
 
     private MarketplaceFrontController frontController;
@@ -23,6 +25,7 @@ public class AddItemView implements  MarketplaceView{
         System.out.println("Enter your choice:");
         Scanner in = new Scanner(System.in).useDelimiter("\\n");
         String choice = in.next();
+        // if yes takes in the new product details
         if(choice.equalsIgnoreCase("yes")){
             Product product = new Product();
             System.out.println("Enter Product id:");
@@ -45,11 +48,14 @@ public class AddItemView implements  MarketplaceView{
             int quantity = in.nextInt();
             product.setUnitCount(quantity);
 
-            boolean isSuccess = frontController.addItem(product);
+            // passes these details of product which is to be added
+            boolean isSuccess = frontController.handleAddItem(product);
+            // if successfully added displays below message
             if(isSuccess){
                 System.out.println(".........................Alert.........................");
                 System.out.println("*********Item is Successfully added to inventory***********");
             }
+            // goes back to home
             showHome();
         }
         else if(choice.equalsIgnoreCase("no")){

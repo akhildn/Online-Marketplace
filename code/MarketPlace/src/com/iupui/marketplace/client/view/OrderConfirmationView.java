@@ -12,6 +12,8 @@ import java.util.Scanner;
 /**
  * Created by anaya on 4/2/2017.
  */
+
+// displays order which was placed
 public class OrderConfirmationView implements MarketplaceView {
 
     private Order order;
@@ -27,6 +29,7 @@ public class OrderConfirmationView implements MarketplaceView {
         System.out.println("Order id:" + order.getOrderId());
         System.out.println("Order Placed for:");
         for(Item item : order.getOrderItems()){
+            // displays only items which were placed
             if(item.isAvailable()){
                 flag = true;
                 printOrderItemDetails(item);
@@ -45,6 +48,7 @@ public class OrderConfirmationView implements MarketplaceView {
         else{
             System.out.println("\t None of the items were processed ");
         }
+        // displays items which were not placed
         System.out.println("Unprocessed items from the cart:");
         for(Item item : order.getOrderItems()){
             if(!item.isAvailable()){
@@ -57,6 +61,7 @@ public class OrderConfirmationView implements MarketplaceView {
 
     }
 
+    // prints details of items which were in the order
     private void printOrderItemDetails(Item item) {
         System.out.println("id :" + item.getProduct().getProductId());
         System.out.println("Name: " + item.getProduct().getProductName());
@@ -65,6 +70,7 @@ public class OrderConfirmationView implements MarketplaceView {
         System.out.println("Total Price: " + item.getTotalItemPrice());
     }
 
+    // menu for navigation
     private void nextView() throws RemoteException {
         System.out.println("Menu: ");
         System.out.println("1.Home");

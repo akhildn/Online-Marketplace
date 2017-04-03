@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Ryan: make sure to include useful comments in each file.
+//holds details of shopping cart of an user
 public class ShoppingCart implements Serializable {
 	private int cartId;
 	private double cartTotal;

@@ -43,6 +43,7 @@ public class BrowseView implements  MarketplaceView{
             frontController.homeRedirect();
         }
         else{
+            // if entered choice is integer
             if(choice.matches("[0-9)]+")) {
                 int ch = Integer.parseInt(choice);
                 if (ch > itemCount) {
@@ -51,13 +52,17 @@ public class BrowseView implements  MarketplaceView{
                     System.out.println("........................................");
                     show();
                 } else {
+                    // when an appropriate product is selected
                     Product product = productList.get(ch - 1);
+                    // invokes ProductDetail command is invoked
                     ProductDetailHandler handler = new ProductDetailHandler(frontController, product.getProductId());
                     MarketplaceCommand command = new ProductDetailCommand(handler);
                     CommandInvoker invoker = new CommandInvoker();
                     invoker.invoke(command);
                 }
-            }else{
+            }
+            // if entered input is not an integer
+            else{
                 System.out.println(".............Notice..................");
                 System.out.println("Enter an integer for product serial number");
                 System.out.println("........................................");
@@ -67,6 +72,7 @@ public class BrowseView implements  MarketplaceView{
         }
     }
 
+    // takes in the product list : all products which are in inventory
     public void bindData(List<Product> productList){
         this.productList = productList;
     }

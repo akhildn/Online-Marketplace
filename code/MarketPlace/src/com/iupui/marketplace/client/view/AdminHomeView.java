@@ -27,6 +27,7 @@ public class AdminHomeView implements MarketplaceView {
         System.out.println("Welcome to Admin view");
         System.out.println("1. Browse Items");
         System.out.println("2. Add Items");
+        System.out.println("3. Logout");
         System.out.println("Enter choice :");
         int choice;
         Scanner in= new Scanner(System.in);
@@ -38,11 +39,16 @@ public class AdminHomeView implements MarketplaceView {
             CommandInvoker invoker = new CommandInvoker();
             invoker.invoke(command);
         }
+        // AddItem command will be invoked
         else if(choice == 2 ){
             AddItemHandler handler = new AddItemHandler(fc);
             MarketplaceCommand command = new AddItemCommand(handler);
             CommandInvoker invoker = new CommandInvoker();
             invoker.invoke(command);
+        }
+        // kills process
+        else if(choice == 3){
+            System.exit(0);
         }
         else{
             System.out.println(".........................Notice.........................");

@@ -1,7 +1,6 @@
 package com.iupui.marketplace.client.handlers;
 
 import com.iupui.marketplace.client.MarketplaceFrontController;
-import com.iupui.marketplace.model.beans.Product;
 
 import java.rmi.RemoteException;
 
@@ -21,6 +20,6 @@ public class BrowseHandler implements MarketplaceHandler {
 
     @Override
     public void handleRequest() throws RemoteException {
-        controller.browseItems();
+        controller.handleBrowseItems();
     }
 }

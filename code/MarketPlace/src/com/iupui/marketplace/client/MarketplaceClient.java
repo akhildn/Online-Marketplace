@@ -22,9 +22,8 @@ public class MarketplaceClient{
 
 	public static void main(String args[]){
 		try {
-		Scanner in = new Scanner(System.in);
 		// To locate the Marketplace server.
-		MarketplaceController controller= (MarketplaceController) Naming.lookup("//tesla.cs.iupui.edu:2010/MarketPlace");
+		MarketplaceController controller= (MarketplaceController) Naming.lookup("//10.234.136.55:2010/MarketPlace");
 		MarketplaceFrontController fc=new MarketplaceFrontController(controller);
 		int connectionStatus = controller.connect(); 	// to check if connection to the server has been made.
             if(connectionStatus == 1){

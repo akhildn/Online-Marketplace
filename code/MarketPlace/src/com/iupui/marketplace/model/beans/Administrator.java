@@ -1,6 +1,7 @@
 package com.iupui.marketplace.model.beans;
 
 // Ryan: Please include usefull comments in each file.
+// holds admins details
 public class Administrator {
 	private String adminFirstName;
 	private String adminLastName;

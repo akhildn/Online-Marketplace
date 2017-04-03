@@ -7,6 +7,8 @@ import java.rmi.RemoteException;
 /**
  * Created by anaya on 4/1/2017.
  */
+
+// Command Receiver
 public class ProductDetailHandler implements MarketplaceHandler {
     private  MarketplaceFrontController frontController;
     private int productId;
@@ -18,6 +20,6 @@ public class ProductDetailHandler implements MarketplaceHandler {
 
     @Override
     public void handleRequest() throws RemoteException {
-        frontController.productDetails(productId);
+        frontController.handleProductDetails(productId);
     }
 }

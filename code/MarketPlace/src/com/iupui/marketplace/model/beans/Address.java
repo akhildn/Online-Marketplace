@@ -5,8 +5,9 @@ import java.io.Serializable;
 /**
  * Created by anaya on 4/2/2017.
  */
-public class Address implements Serializable {
 
+// holds all types of address for user
+public class Address implements Serializable {
 
     private String streetAddress;
     private String city;

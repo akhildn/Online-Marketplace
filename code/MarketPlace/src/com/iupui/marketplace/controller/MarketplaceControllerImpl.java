@@ -30,6 +30,9 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	// to check if connection was made
 	@Override
 	public int connect() throws RemoteException {
+	    Thread thread = Thread.currentThread();
+	    // prints out thread id and name on which client has made a connection
+	    System.out.println(thread.getId()+" "+thread.getName());
 		return 1;
 	}
 
@@ -44,14 +47,60 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 		return null;
 	}
 
-
-	//TODO : All the below methods are yet to be implemented
+	// returns product list i.e. all the products which are to be displayed
 	@Override
 	public List<Product> handleBrowseItems() throws RemoteException {
 		List<Product> productList = productDAO.returnItemList();
 		return productList;
 	}
 
+	// returns product object which contains product details
+	@Override
+	public Product handlegetProductDetails(int productId) throws RemoteException {
+		Product product = productDAO.getProductDetails(productId);
+		return product;
+	}
+
+	// returns true is item is added
+	@Override
+	public boolean handleAddItem(Account account, Product product) throws RemoteException {
+	    return productDAO.addNewItem(product);
+	}
+
+	// Will return true is item is added to cart
+	@Override
+	public boolean handleAddToCart(Account account, Product product, int quantity) throws RemoteException {
+        return shoppingCartDAO.addToCart(account,product,quantity);
+
+	}
+
+	// return shopping cart object of logged in user, cart has list of items which were added by him
+    @Override
+    public ShoppingCart handleGetCartDetails(Account session)throws RemoteException {
+        return shoppingCartDAO.getCartDetails(session);
+    }
+
+    // passes list of items from shopping cart, these items are processed i.e. checks if quantity user wanted is still
+	// available, if available that item will be placed, and returns order which contains order details, items which
+	// were placed and which were not.
+	// shopping cart is cleared once order iss processed
+	@Override
+	public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException {
+		List<Item> orderItems = productDAO.processOrderItems(shoppingCart);
+		Order order = orderDAO.placeOrder(session, orderItems,shippingAddress);
+		shoppingCartDAO.clearCart(session.getUsername());
+		return order;
+	}
+
+	// returns all orders which were placed by the user
+	@Override
+	public List<Order> handleGetOrderHistory(Account account) throws RemoteException {
+		List<Order> orderList = orderDAO.getUserOrderHistory(account);
+		return orderList;
+	}
+
+
+	//TODO : All the below methods are yet to be implemented
 	@Override
 	public List<ProductCategory> handleListProductCategories() throws RemoteException {
 		// TODO Auto-generated method stub
@@ -76,37 +125,5 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 		return null;
 	}
 
-
-	@Override
-	public Product handlegetProductDetails(int productId) throws RemoteException {
-		Product product = productDAO.getDetails(productId);
-		return product;
-	}
-
-	// Will return true when entered, only admin can use this method
-	@Override
-	public boolean handleAddItem(Account account, Product product) throws RemoteException {
-	    return productDAO.addNewItem(product);
-	}
-
-	// Will return true when entered, only customer can use this method
-	@Override
-	public boolean handleAddToCart(Account account, Product product, int quantity) throws RemoteException {
-        return shoppingCartDAO.addToCart(account,product,quantity);
-
-	}
-
-    @Override
-    public ShoppingCart handleGetCartDetails(Account session)throws RemoteException {
-        return shoppingCartDAO.handleGetCartDetials(session);
-    }
-
-	@Override
-	public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException {
-		List<Item> orderItems = productDAO.processOrderItems(shoppingCart);
-		Order order = orderDAO.placeOrder(session, orderItems,shippingAddress);
-		shoppingCartDAO.clearCart(session.getUsername());
-		return order;
-	}
 
 }

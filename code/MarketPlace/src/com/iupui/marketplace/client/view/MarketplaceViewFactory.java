@@ -38,6 +38,9 @@ public class MarketplaceViewFactory extends MarketplaceViewAbstractFactory {
         else if(type.equals("ORDER_CONFIRMATION")){
             marketplaceView = new OrderConfirmationView(frontController);
             return marketplaceView;
+        }else if(type.equals("ORDER_HISTORY")){
+            marketplaceView = new PurchaseHistoryView(frontController);
+            return marketplaceView;
         }
         else{
             return null;

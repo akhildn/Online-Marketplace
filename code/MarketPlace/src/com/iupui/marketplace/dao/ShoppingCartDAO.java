@@ -4,12 +4,12 @@ import com.iupui.marketplace.model.beans.Account;
 import com.iupui.marketplace.model.beans.Item;
 import com.iupui.marketplace.model.beans.Product;
 import com.iupui.marketplace.model.beans.ShoppingCart;
-
-import java.io.Serializable;
 import java.util.HashMap;
 
+// This class is used to set and get values for items added to the cart for a user
 public class ShoppingCartDAO {
 
+    // maps shopping cart to its associated user
     HashMap<String, ShoppingCart> shoppingCartHashMap;
     int cartId;
     public ShoppingCartDAO(){
@@ -17,6 +17,7 @@ public class ShoppingCartDAO {
             cartId =0;
     }
 
+    // adds item to cart which is requested by the user
     public boolean addToCart(Account account, Product product, int quantity) {
         ShoppingCart shoppingCart;
         if(shoppingCartHashMap.get(account.getUsername()) == null){
@@ -38,11 +39,13 @@ public class ShoppingCartDAO {
         return true;
     }
 
-    public ShoppingCart handleGetCartDetials(Account account){
+    // returns shopping cart which is associated to the user
+    public ShoppingCart getCartDetails(Account account){
         ShoppingCart shoppingCart = shoppingCartHashMap.get(account.getUsername());
         return shoppingCart;
     }
 
+    //clears the shopping  cart for a specific user
     public void clearCart(String username) {
         if(shoppingCartHashMap.get(username) != null){
             shoppingCartHashMap.put(username,new ShoppingCart());

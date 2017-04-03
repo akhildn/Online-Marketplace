@@ -46,13 +46,15 @@ public class ShoppingCartView implements MarketplaceView {
             System.out.println("Total Cart Value:" + shoppingCart.getCartTotal());
             nextView(true);
         } else {
-            System.out.println("***************************\tShopping cart is empty\t********************");
+            System.out.println(".........\tShopping cart is empty\t..........");
             nextView(false);
         }
     }
 
     public void nextView(boolean check) throws RemoteException {
+
         if (check) {
+            System.out.println("Menu:");
             System.out.println("\n \n 1. Purchase");
             System.out.println("\n \n 2. Home");
             System.out.println("Enter your choice:");
@@ -79,6 +81,7 @@ public class ShoppingCartView implements MarketplaceView {
                 show();
             }
         } else {
+            System.out.println("Menu:");
             System.out.println("\n \n 1. Home");
             System.out.println("Enter your choice:");
             int ch;
@@ -113,9 +116,13 @@ public class ShoppingCartView implements MarketplaceView {
     }
 
     public boolean isCartEmpty() {
-        if (shoppingCart != null) {
+        if (shoppingCart != null ) {
+            if(shoppingCart.getCartTotal()!=0){
             cartItems = shoppingCart.getCartItems();
             return true;
+            }else{
+                return false;
+            }
         }
         return false;
     }

@@ -6,7 +6,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-// Ryan: Please include usefull comments in each file.
+// Ryan: Please include useful comments in each file.
+// holds details of an order of an user
 public class Order implements Serializable {
 	private int orderId;
 	private Date orderDate;

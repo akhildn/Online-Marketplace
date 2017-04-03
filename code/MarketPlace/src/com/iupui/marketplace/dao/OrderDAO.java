@@ -4,15 +4,12 @@ import com.iupui.marketplace.model.beans.Account;
 import com.iupui.marketplace.model.beans.Address;
 import com.iupui.marketplace.model.beans.Item;
 import com.iupui.marketplace.model.beans.Order;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
+
 
 public class OrderDAO {
 
+    // maps user and orders
     HashMap<String, List<Order>> userOrderMap;
     private int orderId;
 
@@ -22,6 +19,12 @@ public class OrderDAO {
 
     }
 
+
+    // this method will finish processing the incoming purchase request
+    //Step 1: check if user already has any orders placed in past, if yes current order is added to old list
+    // else new order list is created to them
+    //Step 2: sets order details : date, id, tax, total, address
+    //Step 3: adds this order to the list
     public Order placeOrder(Account session, List<Item> orderItems, Address shippingAddress) {
         List<Order> orderList;
         if(userOrderMap.get(session.getUsername()) == null){
@@ -47,6 +50,7 @@ public class OrderDAO {
         return order;
     }
 
+    // calculates order total only for the items which were processed, i.e where in stock
     private double calculateOderItems(List<Item> orderItems) {
         double subTotal=0;
 
@@ -58,4 +62,15 @@ public class OrderDAO {
         return subTotal;
     }
 
+    // returns order history of the associated user
+    public List<Order> getUserOrderHistory(Account session) {
+        List<Order> orderList;
+        if(userOrderMap.get(session.getUsername()) == null) {
+            return null;
+        }
+        else{
+            orderList = userOrderMap.get(session.getUsername());
+            return orderList;
+        }
+    }
 }

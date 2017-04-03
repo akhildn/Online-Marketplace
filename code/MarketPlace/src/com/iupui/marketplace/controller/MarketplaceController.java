@@ -35,7 +35,6 @@ public interface MarketplaceController extends java.rmi.Remote {
 	public List<Product> handleBrowseItems() throws RemoteException;
 	public Product handlegetProductDetails(int productId) throws RemoteException;
 
-	// Methods with annotations for assignment#3
 	// Admin functions
 	@RequiresRole("ADMIN")
 	public boolean handleAddItem(Account account, Product product) throws RemoteException;
@@ -47,4 +46,6 @@ public interface MarketplaceController extends java.rmi.Remote {
 	public ShoppingCart handleGetCartDetails(Account session)throws RemoteException;
 	@RequiresRole("CUSTOMER")
     public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart,Address shippingAddress)throws RemoteException;
+	@RequiresRole("CUSTOMER")
+	public List<Order> handleGetOrderHistory(Account account)throws RemoteException;
 }

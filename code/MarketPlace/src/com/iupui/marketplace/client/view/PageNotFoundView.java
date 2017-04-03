@@ -7,6 +7,8 @@ import java.rmi.RemoteException;
 /**
  * Created by anaya on 2/12/2017.
  */
+
+// page when an exception is raised, redirects user to home view
 public class PageNotFoundView implements MarketplaceView {
 
     private MarketplaceFrontController frontController;

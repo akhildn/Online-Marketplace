@@ -1,6 +1,7 @@
 package com.iupui.marketplace.model.beans;
 
-// Ryan: Please include usefull comments in each file.
+// Ryan: Please include useful comments in each file.
+// holds customers details
 public class Customer {
 	private String firstName;
 	private String lastName;
