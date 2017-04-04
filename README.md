@@ -1,7 +1,89 @@
-﻿Assignment #3
+﻿Assignment #4
+Given Task: In Assignment #4 you will build upon and improve the existing framework that you have created in the first three assignments for our Marketplace App. For this particular assignment you will be examining the impact that Concurrency has on our application. As mentioned in lecture Java RMI provides the vague definition on the handling of concurrency (specifically threading): 
+
+"3.2 Thread Usage in Remote Method Invocations 
+A method dispatched by the RMI runtime to a remote object implementation may or may not execute in a separate thread. The RMI runtime makes no guarantees with respect to mapping remote object invocations to threads. Since remote method invocation on the same remote object may execute concurrently, a remote object implementation needs to make sure its implementation is thread-safe." 
+
+Our goal is to examine this definition within the scope of our application. The focus of this assignment will be to implement previously unimplemented functionality in your system as well as to explore, in your report, the consequences of concurrency in our Marketplace Application. In your report you should discuss this “guarantee” that Java RMI offers us with respect to concurrency and the impacts that it has on system design. For this assignment we will make use of the follow machines (listed on the next page) to demonstrate this across the network. Your server should demonstrate the ability to handle multiple concurrent requests from different clients. These clients should be able to run on any of the given machines and should locate the server running on a given machine. You should specify which machine you have selected to be your “server” in your README – failure to do so will result in a 0 on the program execution portion of the grading rubric. For this assignment we will make the assumption that there is only ever one server but many clients. As part of this assignment you should now fully implement the following three required functions: Purchase Item, Add Item, and Browse Item. All of the other requirements are still valid. Any updates to your design should be reflected in your domain model, software architectural model, and a discussion of these new design decisions as part of your report. The key to this assignment is your report and discussion! 
+
+Directory Structure:
+.
+├── code
+│   └── MarketPlace
+│       ├── nbproject
+│       │   └── private
+│       └── src
+│           └── com
+│               └── iupui
+│                   └── marketplace
+│                       ├── client
+│                       │   ├── command
+│                       │   ├── handlers
+│                       │   └── view
+│                       ├── controller
+│                       ├── dao
+│                       ├── model
+│                       │   └── beans
+│                       └── server
+└── docs
+
+Server On : 10.234.136.55
+
+Clients on : 10.234.136.56, 10.234.136.57, 10.234.136.58, 10.234.136.59, 10.234.136.60
+
+Compilation through make file:
+-go to csci50700_spring2017_marketplace/code/MarketPlace/src/ 
+$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/
+-run make
+$ make
+
+Execution Instructions:
+make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
+-run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry
+$ rmiregistry 2010&
+-run the server on 10.234.136.55
+$ java com.iupui.marketplace.server.MarketplaceServer
+-run client (in another duplicated session)
+$ java com.iupui.marketplace.client.MarketplaceClient
+
+Credentials:
+
+Admin : 
+username:admin
+password:admin
+
+Customers :
+
+username: user1
+password: user
+
+
+username: user2
+password: user
+
+username: user3
+password: user
+
+username: user4
+password: user
+
+username: user5
+password: user
+
+Functionalities and view implemented:
+-browse (admin + customer)
+-product details view (admin + customer)
+-add item to inventory(admin)
+-add item to cart (customer)
+-shopping cart view (customer)
+-purchase (customer)
+-order confirmation view (customer)
+-order history view (customer)
+__________________________________________________________________________________________________________________________________________
+Assignment #3
 Given Task: In Assignment #3 you will build upon and improve the existing framework that you have created in Assignments #1 and #2 for our Marketplace App. For this particular assignment you will be expanding your application to make use of the Authorization pattern through a role-based access control (RBAC) approach that will make use of Java Annotations. As part of this process you will also implement and explore further the Proxy pattern and the Reflection pattern within the Java programming language. As with Assignment #2, for right now we will consider the two roles within the application to be two distinct roles – meaning an administrator account cannot act like a customer account – if the same individual wants to play both roles he/she must have two separate accounts – although with the use of annotations this could be accommodated in the future. All of the other requirements are still valid.
 
-Directory Structur:
+Directory Structure:
 .
 ├── code
 │   └── MarketPlace
@@ -31,8 +113,8 @@ $ make
 
 Execution Instructions:
 make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
--run rmiregistry since 2010 is hard coded as port use 2010 use 2010 for rmiregistry
-$ rmiregistry 2010
+-run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry
+$ rmiregistry 2010&
 -run the server (in duplicated session)
 $ java com.iupui.marketplace.server.MarketplaceServer
 -run client (in another duplicated session)
@@ -86,9 +168,9 @@ $ make
 
 Execution Instructions:
 make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
--run rmiregistry since 2010 is hard coded as port use 2010 use 2010 for rmiregistry
-$ rmiregistry 2010
--run the server (in duplicated session)
+-run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry
+$ rmiregistry 2010&
+-run the server 
 $ java com.iupui.marketplace.server.MarketplaceServer
 -run client (in another duplicated session)
 $ java com.iupui.marketplace.client.MarketplaceClient
@@ -161,9 +243,9 @@ $ make
 
 Execution Instructions:
 make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
--run rmiregistry since 2010 is hard coded as port use 2010 use 2010 for rmiregistry
-$ rmiregistry 2010
--run the server (in duplicated session)
+-run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry
+$ rmiregistry 2010&
+-run the server 
 $ java com.iupui.marketplace.server.MarketplaceServer
 -run client (in another duplicated session)
 $ java com.iupui.marketplace.client.MarketplaceClient

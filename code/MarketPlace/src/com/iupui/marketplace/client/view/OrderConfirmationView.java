@@ -43,10 +43,10 @@ public class OrderConfirmationView implements MarketplaceView {
             System.out.println("Order Sub-Total:" + order.getOrderSubtotal());
             System.out.println("Order Tax:" + order.getTax());
             System.out.println("Order Total:" + order.getOrderTotal());
-            System.out.println("_______________________________________________________________________________________");
+            System.out.println("__________________________________________________________________________________");
         }
         else{
-            System.out.println("\t None of the items were processed ");
+            System.out.println("......................\t None of the items were processed\t .....................");
         }
         // displays items which were not placed
         System.out.println("Unprocessed items from the cart:");
