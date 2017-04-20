@@ -4,6 +4,7 @@ import com.iupui.marketplace.controller.MarketplaceController;
 import com.iupui.marketplace.model.beans.*;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.List;
 
 // Ryan: Please include useful comments in each file.
@@ -27,20 +28,24 @@ public class MarketplaceFrontController {
 
     // method to set to authenticate and set dispatch request
     public void authenticate(String uname,String pass) throws RemoteException {
-       Account account = controller.handleLogin(uname,pass);
-
-       // account object is not null then login credentials are valid and Home is requested.
-       if(account!=null){
-           isAuthenticate = true;
-           this.session=account;
-           dispatchRequest("HOME", account);
-       }
-       // when account type is null i.e. no user details with entered credentials then set page ="INVALID_CREDENTIALS"
-       else{
+        Account account = null;
+        try {
+            account = controller.handleLogin(uname,pass);
+            // account object is not null then login credentials are valid and Home is requested.
+            if(account!=null){
+                isAuthenticate = true;
+                this.session=account;
+                dispatchRequest("HOME", session);
+            }
+            // when account type is null i.e. no user details with entered credentials then set page ="INVALID_CREDENTIALS"
+            else{
+                isAuthenticate = false;
+                dispatchRequest("INVALID_CREDENTIALS", session);
+            }
+        } catch (SQLException e) {
             isAuthenticate = false;
-           dispatchRequest("INVALID_CREDENTIALS", account);
-       }
-
+            dispatchRequest("PAGE_NOT_FOUND", session);
+        }
     }
 
     // returns status of authentication for future references
@@ -61,9 +66,13 @@ public class MarketplaceFrontController {
     // gets list of products from db and dispatches browse view
     public void handleBrowseItems() throws RemoteException {
         if(isAuthenticate) {
-            List<Product> productList;
-            productList = controller.handleBrowseItems();
-            dispatcher.dispatch("BROWSE", productList, this);
+            try {
+                List<Product> productList;
+                productList = controller.handleBrowseItems();
+                dispatcher.dispatch("BROWSE", productList, this);
+            }catch (SQLException e){
+                dispatchRequest("PAGE_NOT_FOUND", session);
+            }
         }
         //TODO : is not authenticated display page not found
     }
@@ -72,8 +81,12 @@ public class MarketplaceFrontController {
     // the object is then passed to product detail view where all the product details are displayed
     public void handleProductDetails(int productId) throws RemoteException {
         if(isAuthenticate){
-            Product product= controller.handlegetProductDetails(productId);
-            dispatcher.dispatch("PRODUCT_DETAILS", product, this);
+            try {
+                Product product = controller.handlegetProductDetails(productId);
+                dispatcher.dispatch("PRODUCT_DETAILS", product, this);
+            }catch (SQLException e){
+                dispatchRequest("PAGE_NOT_FOUND", session);
+            }
         }
     }
 
@@ -81,16 +94,24 @@ public class MarketplaceFrontController {
     // get shopping cart object which is attached to current user in db(Hashmap in server)
     // this object is passed to view to display items and cart total of the cart
     public void handleViewCart() throws RemoteException {
-        ShoppingCart shoppingCart = controller.handleGetCartDetails(session);
-        dispatcher.dispatch("CART_VIEW", shoppingCart, this);
+        try {
+            ShoppingCart shoppingCart = controller.handleGetCartDetails(session);
+            dispatcher.dispatch("CART_VIEW", shoppingCart, this);
+        }catch(SQLException e){
+            dispatchRequest("PAGE_NOT_FOUND", session);
+        }
     }
 
     // adds the product to shopping cart object and shopping cart view is called
     public void handleAddCart(Product product, int quantity) throws RemoteException {
         if(isAuthenticate){
-            boolean isAdded = controller.handleAddToCart(session,product,quantity);
-            if(isAdded){
-                handleViewCart();
+            try {
+                boolean isAdded = controller.handleAddToCart(session, product, quantity);
+                if (isAdded) {
+                    handleViewCart();
+                }
+            }catch(SQLException e){
+                dispatchRequest("PAGE_NOT_FOUND", session);
             }
         }
     }
@@ -113,8 +134,12 @@ public class MarketplaceFrontController {
     // passes product object which contains details of new product that admin wants to add to inventory
     public boolean handleAddItem(Product product) throws RemoteException {
         if(isAuthenticate){
-            boolean isProductAdded = controller.handleAddItem(session, product);
-            return isProductAdded;
+            try {
+                boolean isProductAdded = controller.handleAddItem(session, product);
+                return isProductAdded;
+            }catch (SQLException e){
+                dispatchRequest("PAGE_NOT_FOUND", session);
+            }
         }
         return false;
     }
@@ -122,9 +147,12 @@ public class MarketplaceFrontController {
     // processes order and go to purchase view where it displays which items where places and which were not
     public void handlePurchase(ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException {
         if(isAuthenticate) {
-            Order order = controller.handlePlaceOrder(session, shoppingCart, shippingAddress);
-            dispatcher.dispatch("ORDER_CONFIRMATION", order, this);
-
+            try {
+                Order order = controller.handlePlaceOrder(session, shoppingCart, shippingAddress);
+                dispatcher.dispatch("ORDER_CONFIRMATION", order, this);
+            }catch (SQLException e){
+                dispatchRequest("PAGE_NOT_FOUND", session);
+            }
         }
     }
 

@@ -2,8 +2,10 @@ package com.iupui.marketplace.controller;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.List;
 
+import com.iupui.marketplace.database.MarketplaceDBConnection;
 import com.iupui.marketplace.dao.AccountDAO;
 import com.iupui.marketplace.dao.OrderDAO;
 import com.iupui.marketplace.dao.ProductDAO;
@@ -16,14 +18,12 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	
 
 	private static final long serialVersionUID = 1L;
-    AccountDAO accountDAO;
-    ProductDAO productDAO;
-    ShoppingCartDAO shoppingCartDAO;
+	// remove
     OrderDAO orderDAO;
+
 	public MarketplaceControllerImpl() throws RemoteException{
-       	this.accountDAO = new AccountDAO();
-        this.productDAO = new ProductDAO();
-        this.shoppingCartDAO = new ShoppingCartDAO();
+		MarketplaceDBConnection.getMarketplaceDbConnection();
+		//remove
         this.orderDAO = new OrderDAO();
     }
 
@@ -38,9 +38,11 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 
 	// Login Handler : checks user credentials are valid or not.
 	@Override
-	public Account handleLogin(String username, String password) throws RemoteException {
+	public Account handleLogin(String username, String password) throws RemoteException, SQLException {
 		// Below method checks if entered credentials are actually valid.
+		AccountDAO accountDAO = new AccountDAO();
 		boolean isValid = accountDAO.validateCredentials(username,password);
+		System.out.println(isValid);
 		if(isValid){
 			 return accountDAO.getAccountDetails(username);
 		}
@@ -49,34 +51,39 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 
 	// returns product list i.e. all the products which are to be displayed
 	@Override
-	public List<Product> handleBrowseItems() throws RemoteException {
+	public List<Product> handleBrowseItems() throws RemoteException, SQLException {
+		ProductDAO productDAO = new ProductDAO();
 		List<Product> productList = productDAO.returnItemList();
 		return productList;
 	}
 
 	// returns product object which contains product details
 	@Override
-	public Product handlegetProductDetails(int productId) throws RemoteException {
+	public Product handlegetProductDetails(int productId) throws RemoteException, SQLException {
+		ProductDAO productDAO = new ProductDAO();
 		Product product = productDAO.getProductDetails(productId);
 		return product;
 	}
 
 	// returns true is item is added
 	@Override
-	public boolean handleAddItem(Account account, Product product) throws RemoteException {
+	public boolean handleAddItem(Account account, Product product) throws RemoteException, SQLException {
+		ProductDAO productDAO = new ProductDAO();
 	    return productDAO.addNewItem(product);
 	}
 
 	// Will return true is item is added to cart
 	@Override
-	public boolean handleAddToCart(Account account, Product product, int quantity) throws RemoteException {
+	public boolean handleAddToCart(Account account, Product product, int quantity) throws RemoteException, SQLException {
+		ShoppingCartDAO shoppingCartDAO = new ShoppingCartDAO();
         return shoppingCartDAO.addToCart(account,product,quantity);
 
 	}
 
 	// return shopping cart object of logged in user, cart has list of items which were added by him
     @Override
-    public ShoppingCart handleGetCartDetails(Account session)throws RemoteException {
+    public ShoppingCart handleGetCartDetails(Account session) throws RemoteException, SQLException {
+		ShoppingCartDAO shoppingCartDAO = new ShoppingCartDAO();
         return shoppingCartDAO.getCartDetails(session);
     }
 
@@ -85,10 +92,11 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	// were placed and which were not.
 	// shopping cart is cleared once order iss processed
 	@Override
-	public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException {
+	public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException, SQLException {
+		ProductDAO productDAO = new ProductDAO();
 		List<Item> orderItems = productDAO.processOrderItems(shoppingCart);
 		Order order = orderDAO.placeOrder(session, orderItems,shippingAddress);
-		shoppingCartDAO.clearCart(session.getUsername());
+		//shoppingCartDAO.clearCart(session.getUsername());
 		return order;
 	}
 

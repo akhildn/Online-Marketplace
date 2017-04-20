@@ -1,65 +1,81 @@
 package com.iupui.marketplace.dao;
+import com.iupui.marketplace.database.MarketplaceDBConnection;
 import com.iupui.marketplace.model.beans.Item;
 import com.iupui.marketplace.model.beans.Product;
 import com.iupui.marketplace.model.beans.ShoppingCart;
+import com.mysql.jdbc.Statement;
 
+import java.net.ConnectException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 // This class will responsible creating new products or adding new products, updating attributes, returns products
 // details upon request
 public class ProductDAO {
 
-    /*list to store product details */
-    List<Product> productList = new ArrayList<>();
 
-    // mocked up products
-    Product productOne = new Product();
-    Product productTwo = new Product();
+    //Connection object
+    private Connection dbConnection;
     public ProductDAO(){
-
-        /* details for item 1 */
-        productOne.setProductName("iPhone");
-        productOne.setProductId(9005676);
-        productOne.setDescription("This is a phone \n model:2015 \n feature:touch");
-        productOne.setUnitPrice(450);
-        productOne.setUnitCount(5);
-        productOne.setAvailable(true);
-
-        /*details for item 2 */
-        productTwo.setProductName("iPad");
-        productTwo.setProductId(9005421);
-        productTwo.setDescription("This is a tablet \n model:2015 \n feature:touch");
-        productTwo.setUnitPrice(550);
-        productTwo.setUnitCount(5);
-        productTwo.setAvailable(true);
-
-        productList.add(productOne);
-        productList.add(productTwo);
+        // gets db connection
+        dbConnection = MarketplaceDBConnection.getMarketplaceDbConnection().getConnection();
     }
 
     // returns all the products which are available in inventory
-    public List<Product> returnItemList(){
+    public List<Product> returnItemList() throws SQLException {
+         /*list to store product details */
+        List<Product> productList = new ArrayList<>();
+        // gets all products
+        String query = " select * from anayabu_db.product";
+        Statement statement = (Statement) dbConnection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        // iterate through all the rows
+        while(resultSet.next()) {
+            Product product = new Product();
+            // populate product object
+            product.setProductId(resultSet.getInt("product_id"));
+            product.setProductName(resultSet.getString("product_name"));
+            product.setDescription(resultSet.getString("description"));
+            product.setUnitPrice(resultSet.getDouble("unit_price"));
+            product.setUnitCount(resultSet.getInt("unit_count"));
+            product.setAvailable(resultSet.getBoolean("availability"));
+            // adds the populated product object to product list
+            productList.add(product);
+        }
         return productList;
     }
 
     // returns details of specific product by product id
-    public Product getProductDetails(int id) {
-        for(Product product : productList){
-            if(product.getProductId() == id ){
-                return product;
-            }
+    public Product getProductDetails(int id) throws SQLException {
+        Product product = new Product();
+        // gets product by id
+        String query = " select * from anayabu_db.product where product_id="+id;
+        Statement statement = (Statement) dbConnection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        // iterate through all the rows
+        if(resultSet.next()) {
+            // populate product object
+            product.setProductId(resultSet.getInt("product_id"));
+            product.setProductName(resultSet.getString("product_name"));
+            product.setDescription(resultSet.getString("description"));
+            product.setUnitPrice(resultSet.getDouble("unit_price"));
+            product.setUnitCount(resultSet.getInt("unit_count"));
+            product.setAvailable(resultSet.getBoolean("availability"));
+            return product;
         }
         return null;
     }
 
     // adds new product to inventory, accessible only to admin
     public boolean addNewItem(Product product) {
-        productList.add(product);
+       // productList.add(product);
         return true;
     }
 
     // this method will process each item in the incoming purchase request
-    public List<Item> processOrderItems(ShoppingCart shoppingCart) {
+    public List<Item> processOrderItems(ShoppingCart shoppingCart) throws SQLException {
         List<Item> orderItems = new ArrayList<>();
         List<Item> cartItems = shoppingCart.getCartItems();
 
@@ -103,22 +119,22 @@ public class ProductDAO {
 
     // updates product quantity
     private boolean updateProductQuantity(int productId, int orderQuanity) {
-        for(Product product : productList){
+       /* for(Product product : productList){
             if(product.getProductId() == productId ){
                 product.setUnitCount(product.getUnitCount()-orderQuanity);
                 return true;
             }
-        }
+        }*/
         return false;
     }
 
     // checks if request quantity is still available
     public boolean isProductAvailable(int productId, int quantity){
-        for(Product product : productList){
+       /* for(Product product : productList){
             if(product.getProductId() == productId ){
                 return product.getUnitCount()>=quantity ? true : false;
             }
-        }
+        }*/
         return false;
     }
 

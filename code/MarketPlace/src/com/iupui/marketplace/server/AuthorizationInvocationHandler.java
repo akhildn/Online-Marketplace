@@ -5,6 +5,7 @@ import com.iupui.marketplace.model.beans.Account;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -31,16 +32,25 @@ public class AuthorizationInvocationHandler implements InvocationHandler, Serial
 
             // checks if the user has access to the method by checking with role specified in the annotations
             if (userType.equals(test.value())) {
-                // if annotation role and userType matches following method is called
-                return method.invoke(impl, args);
+                try {
+                    // if annotation role and userType matches following method is called
+                    return method.invoke(impl, args);
+                }catch (InvocationTargetException e){
+                    throw e.getCause();
+                }
             } else {
                 // When use doesn't have access to method which was called.
                 // Custom Exception message is displayed.
                 throw new AuthorizationException(method.getName(),userType);
             }
         } else {
-            // when no annotation is present for the method
-            return method.invoke(impl, args);
+
+            try {
+                // when no annotation is present for the method
+                return method.invoke(impl, args);
+            }catch (InvocationTargetException e){
+                throw e.getCause();
+            }
         }
     }
 }

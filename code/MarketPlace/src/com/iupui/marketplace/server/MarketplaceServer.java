@@ -28,7 +28,7 @@ public class MarketplaceServer  {
                     new AuthorizationInvocationHandler(new MarketplaceControllerImpl()));
 
 			// Binds the Server to the RMI Service.
-            Naming.rebind("//10.234.136.55:2010/MarketPlace", controller);
+            Naming.rebind("//10.234.136.55:2011/MarketPlace", controller);
             
             System.out.println("Marketplace Server Ready!");
 		} catch (Exception e){

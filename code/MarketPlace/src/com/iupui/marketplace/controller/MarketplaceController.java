@@ -6,6 +6,7 @@
 package com.iupui.marketplace.controller;
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.iupui.marketplace.model.beans.*;
@@ -29,23 +30,23 @@ public interface MarketplaceController extends java.rmi.Remote {
 	public List<Product> handleBrowseItemsByProductName(String productName) throws RemoteException;
 
 	// login handler, checks if user credentials are valid.
-	public Account handleLogin(String username, String password) throws RemoteException;
+	public Account handleLogin(String username, String password) throws RemoteException, SQLException;
 
 	// common for admin and customer
-	public List<Product> handleBrowseItems() throws RemoteException;
-	public Product handlegetProductDetails(int productId) throws RemoteException;
+	public List<Product> handleBrowseItems() throws RemoteException, SQLException;
+	public Product handlegetProductDetails(int productId) throws RemoteException, SQLException;
 
 	// Admin functions
 	@RequiresRole("ADMIN")
-	public boolean handleAddItem(Account account, Product product) throws RemoteException;
+	public boolean handleAddItem(Account account, Product product) throws RemoteException, SQLException;
 
 	// Customer functions
 	@RequiresRole("CUSTOMER")
-	public boolean handleAddToCart(Account account, Product product, int quantity) throws	RemoteException;
+	public boolean handleAddToCart(Account account, Product product, int quantity) throws RemoteException, SQLException;
 	@RequiresRole("CUSTOMER")
-	public ShoppingCart handleGetCartDetails(Account session)throws RemoteException;
+	public ShoppingCart handleGetCartDetails(Account session) throws RemoteException, SQLException;
 	@RequiresRole("CUSTOMER")
-    public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart,Address shippingAddress)throws RemoteException;
+    public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart,Address shippingAddress) throws RemoteException, SQLException;
 	@RequiresRole("CUSTOMER")
 	public List<Order> handleGetOrderHistory(Account account)throws RemoteException;
 }
