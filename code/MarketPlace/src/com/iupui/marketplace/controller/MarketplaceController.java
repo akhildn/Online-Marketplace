@@ -22,7 +22,6 @@ public interface MarketplaceController extends java.rmi.Remote {
 	//Fixed : welcomeMessage() removed and welcome string included in LoginView
 	//public String welcomeMessage() throws RemoteException;
 
-
 	//TODO : yet to be implemented based on requirement of the assignment
 	public List<ProductCategory> handleListProductCategories() throws RemoteException;
 	public List<Product> handleBrowseItemsByCategoryId(int categoryId) throws RemoteException;
@@ -39,6 +38,10 @@ public interface MarketplaceController extends java.rmi.Remote {
 	// Admin functions
 	@RequiresRole("ADMIN")
 	public boolean handleAddItem(Account account, Product product) throws RemoteException, SQLException;
+    @RequiresRole("ADMIN")
+    boolean handleUpdateProduct(Account session, Product product) throws RemoteException, SQLException;
+    @RequiresRole("ADMIN")
+    boolean handleRemoveProduct(Account session, int productId) throws RemoteException, SQLException;
 
 	// Customer functions
 	@RequiresRole("CUSTOMER")
@@ -49,6 +52,9 @@ public interface MarketplaceController extends java.rmi.Remote {
     public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart,String shippingAddress) throws RemoteException, SQLException;
 	@RequiresRole("CUSTOMER")
 	public List<Order> handleGetOrderHistory(Account account) throws RemoteException, SQLException;
+	@RequiresRole("CUSTOMER")
+   	public ShoppingCart handleClearCart(Account account, int cartId) throws RemoteException, SQLException;
 
-   public ShoppingCart handleClearCart(Account account, int cartId) throws RemoteException, SQLException;
+
+
 }

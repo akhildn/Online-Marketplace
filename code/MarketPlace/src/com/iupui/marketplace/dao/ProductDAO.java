@@ -145,4 +145,28 @@ public class ProductDAO {
         return false;
     }
 
+    public boolean updateProduct(Product product) throws SQLException {
+        if(product!=null) {
+            String updateQuery = " update product set product_name='" + product.getProductName() + "'," +
+                    " description='" +
+                    product.getDescription() + "', unit_price=" + product.getUnitPrice() + ", unit_count=" +
+                    product.getUnitCount() + ", availability=" + product.isAvailable() + " where product_id="
+                    + product.getProductId();
+            System.out.println(updateQuery);
+            Statement statement = (Statement) dbConnection.createStatement();
+            statement.executeUpdate(updateQuery);
+            return  true;
+        }
+        return false;
+    }
+
+    public boolean removeProduct(int productId) throws SQLException {
+        String removeQuery = " delete from product where product_id ="+productId;
+        Statement statement = (Statement) dbConnection.createStatement();
+        int isRemoved = statement.executeUpdate(removeQuery);
+        if(isRemoved != 0){
+            return  true;
+        }
+        return false;
+    }
 }

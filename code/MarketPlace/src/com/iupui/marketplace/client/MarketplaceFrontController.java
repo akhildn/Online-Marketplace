@@ -74,7 +74,6 @@ public class MarketplaceFrontController {
                 dispatchRequest("PAGE_NOT_FOUND", session);
             }
         }
-        //TODO : is not authenticated display page not found
     }
 
     // gets details of product which user has selected in browse view
@@ -175,5 +174,52 @@ public class MarketplaceFrontController {
         } catch (SQLException e) {
             dispatchRequest("PAGE_NOT_FOUND", session);
         }
+    }
+
+
+    public void handleRemoveProductView() throws RemoteException {
+        if(isAuthenticate){
+            try {
+                List<Product> productList;
+                productList = controller.handleBrowseItems();
+                dispatcher.dispatch("REMOVE_PRODUCT", productList, this);
+            }catch (SQLException e){
+                dispatchRequest("PAGE_NOT_FOUND", session);
+            }
+        }
+    }
+
+    public void handleUpdateProductView() throws RemoteException {
+        if(isAuthenticate){
+            try {
+                List<Product> productList;
+                productList = controller.handleBrowseItems();
+                dispatcher.dispatch("UPDATE_PRODUCT", productList, this);
+            }catch (SQLException e){
+                dispatchRequest("PAGE_NOT_FOUND", session);
+            }
+        }
+    }
+
+
+    public boolean handleUpdateProduct(Product product) throws RemoteException {
+        boolean isUpdated = false;
+        try {
+             isUpdated = controller.handleUpdateProduct(session, product);
+        }catch (SQLException e){
+            dispatchRequest("PAGE_NOT_FOUND", session);
+        }
+        return isUpdated;
+    }
+
+    public boolean handleRemoveProduct(int productId) throws RemoteException {
+        boolean isRemoved = false;
+        try {
+            isRemoved = controller.handleRemoveProduct(session, productId);
+        }catch (SQLException e){
+            dispatchRequest("PAGE_NOT_FOUND", session);
+        }
+        return isRemoved;
+
     }
 }

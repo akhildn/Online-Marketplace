@@ -80,6 +80,18 @@ public class MarketplaceDispatcher {
                 purchaseHistoryView.bindData((List<Order>) object);
                 purchaseHistoryView.show();
             }
+            else if(page.equals("REMOVE_PRODUCT")){
+                MarketplaceViewAbstractFactory factoryView = new MarketplaceViewFactory(frontController);
+                RemoveProductView removeProductView = (RemoveProductView) factoryView.getView("REMOVE_PRODUCT");
+                removeProductView.bindData((List<Product>) object);
+                removeProductView.show();
+            }
+            else if(page.equals("UPDATE_PRODUCT")){
+                MarketplaceViewAbstractFactory factoryView = new MarketplaceViewFactory(frontController);
+                UpdateProductView updateProductView = (UpdateProductView) factoryView.getView("UPDATE_PRODUCT");
+                updateProductView.bindData((List<Product>) object);
+                updateProductView.show();
+            }
             // view which is displayed login fails i.e. when username or password does not match with details in DB
             else if (page.equals("INVALID_CREDENTIALS")) {
                 MarketplaceViewAbstractFactory factoryView = new ErrorViewFactory(frontController);

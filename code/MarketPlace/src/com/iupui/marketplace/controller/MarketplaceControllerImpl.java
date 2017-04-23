@@ -68,7 +68,19 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	    return productDAO.addNewItem(product);
 	}
 
-	// Will return true is item is added to cart
+    @Override
+    public boolean handleUpdateProduct(Account session, Product product) throws RemoteException, SQLException {
+        ProductDAO productDAO = new ProductDAO();
+        return productDAO.updateProduct(product);
+    }
+
+    @Override
+    public boolean handleRemoveProduct(Account session, int productId) throws RemoteException, SQLException {
+        ProductDAO productDAO = new ProductDAO();
+        return  productDAO.removeProduct(productId);
+    }
+
+    // Will return true is item is added to cart
 	@Override
 	public boolean handleAddToCart(Account account, Product product, int quantity) throws RemoteException, SQLException {
 		ShoppingCartDAO shoppingCartDAO = new ShoppingCartDAO();
