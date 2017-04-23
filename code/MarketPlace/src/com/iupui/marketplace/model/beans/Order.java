@@ -9,38 +9,38 @@ import java.util.List;
 // Ryan: Please include useful comments in each file.
 // holds details of an order of an user
 public class Order implements Serializable {
-	private int orderId;
-	private Date orderDate;
+	private String orderId;
+	private String orderDate;
 	private String shippingType;
 	private String orderStatus;
 	private double orderSubtotal;
 	private double tax;
 	private double orderTotal;
 	private List<Item> orderItems;
-	private Address shippingAddress;
+	private String shippingAddress;
 	
 	/**
 	 * @return the orderId
 	 */
-	public int getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 	/**
 	 * @param orderId the orderId to set
 	 */
-	public void setOrderId(int orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 	/**
 	 * @return the orderDate
 	 */
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
 	/**
 	 * @param orderDate the orderDate to set
 	 */
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 	/**
@@ -110,11 +110,11 @@ public class Order implements Serializable {
 		this.orderItems = orderItems;
 	}
 
-	public Address getShippingAddress() {
+	public String getShippingAddress() {
 		return shippingAddress;
 	}
 
-	public void setShippingAddress(Address shippingAddress) {
+	public void setShippingAddress(String shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
 	

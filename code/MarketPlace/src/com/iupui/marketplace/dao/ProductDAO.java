@@ -69,16 +69,20 @@ public class ProductDAO {
     }
 
     // adds new product to inventory, accessible only to admin
-    public boolean addNewItem(Product product) {
-       // productList.add(product);
-        return true;
+    public boolean addNewItem(Product product) throws SQLException {
+        String insertProductQuery = " insert into product (product_name,description,unit_price,unit_count,availability"
+                + ") values ( '"+product.getProductName()+"','"+product.getDescription()+"',"
+                +product.getUnitPrice()+","+product.getUnitCount()+","+product.isAvailable()+")";
+        System.out.println(insertProductQuery);
+        Statement statement = (Statement) dbConnection.createStatement();
+        int status = statement.executeUpdate(insertProductQuery);
+        return status==1 ? true : false;
     }
 
     // this method will process each item in the incoming purchase request
     public List<Item> processOrderItems(ShoppingCart shoppingCart) throws SQLException {
         List<Item> orderItems = new ArrayList<>();
         List<Item> cartItems = shoppingCart.getCartItems();
-
         // for every item in the cart checks if item is still available
         for(Item item : cartItems){
             // checks if item is available
@@ -118,23 +122,26 @@ public class ProductDAO {
     }
 
     // updates product quantity
-    private boolean updateProductQuantity(int productId, int orderQuanity) {
-       /* for(Product product : productList){
-            if(product.getProductId() == productId ){
-                product.setUnitCount(product.getUnitCount()-orderQuanity);
+    private boolean updateProductQuantity(int productId, int orderQuantity) throws SQLException {
+        Product product =getProductDetails(productId);
+        if(product!=null){
+                int quantity = (product.getUnitCount()-orderQuantity);
+                Statement statement = (Statement) dbConnection.createStatement();
+                statement.executeUpdate("update anayabu_db.product set unit_count="+quantity+" where product_id="
+                        +productId);
                 return true;
             }
-        }*/
         return false;
     }
 
+
+
     // checks if request quantity is still available
-    public boolean isProductAvailable(int productId, int quantity){
-       /* for(Product product : productList){
-            if(product.getProductId() == productId ){
-                return product.getUnitCount()>=quantity ? true : false;
+    public boolean isProductAvailable(int productId, int quantity) throws SQLException {
+        Product product =getProductDetails(productId);
+        if(product!=null){
+            return product.getUnitCount()>=quantity ? true : false;
             }
-        }*/
         return false;
     }
 

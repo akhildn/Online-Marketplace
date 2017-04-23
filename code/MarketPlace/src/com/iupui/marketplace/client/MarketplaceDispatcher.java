@@ -91,7 +91,7 @@ public class MarketplaceDispatcher {
             MarketplaceViewAbstractFactory factoryView = new ErrorViewFactory(frontController);
             // Authorization handler exception message
             System.out.println(ex.getMessage());
-           // ex.printStackTrace();
+            ex.printStackTrace();
              factoryView.getView("PAGE_NOT_FOUND").show();
         }
     }

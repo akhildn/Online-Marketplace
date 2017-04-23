@@ -18,13 +18,9 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	
 
 	private static final long serialVersionUID = 1L;
-	// remove
-    OrderDAO orderDAO;
 
 	public MarketplaceControllerImpl() throws RemoteException{
 		MarketplaceDBConnection.getMarketplaceDbConnection();
-		//remove
-        this.orderDAO = new OrderDAO();
     }
 
 	// to check if connection was made
@@ -92,19 +88,31 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	// were placed and which were not.
 	// shopping cart is cleared once order iss processed
 	@Override
-	public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException, SQLException {
+	public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart, String shippingAddress)
+			throws RemoteException, SQLException {
 		ProductDAO productDAO = new ProductDAO();
+		ShoppingCartDAO shoppingCartDAO= new ShoppingCartDAO();
+		OrderDAO orderDAO= new OrderDAO();
 		List<Item> orderItems = productDAO.processOrderItems(shoppingCart);
 		Order order = orderDAO.placeOrder(session, orderItems,shippingAddress);
-		//shoppingCartDAO.clearCart(session.getUsername());
+		shoppingCartDAO.clearCart(shoppingCart.getCartId());
 		return order;
 	}
 
 	// returns all orders which were placed by the user
 	@Override
-	public List<Order> handleGetOrderHistory(Account account) throws RemoteException {
+	public List<Order> handleGetOrderHistory(Account account) throws RemoteException, SQLException {
+		OrderDAO orderDAO = new OrderDAO();
 		List<Order> orderList = orderDAO.getUserOrderHistory(account);
 		return orderList;
+	}
+
+	@Override
+	public ShoppingCart handleClearCart(Account account, int cartId) throws RemoteException , SQLException {
+		ShoppingCartDAO shoppingCartDAO = new ShoppingCartDAO();
+		shoppingCartDAO.clearCart(cartId);
+		ShoppingCart shoppingCart = shoppingCartDAO.getCartDetails(account);
+		return  shoppingCart;
 	}
 
 

@@ -46,7 +46,9 @@ public interface MarketplaceController extends java.rmi.Remote {
 	@RequiresRole("CUSTOMER")
 	public ShoppingCart handleGetCartDetails(Account session) throws RemoteException, SQLException;
 	@RequiresRole("CUSTOMER")
-    public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart,Address shippingAddress) throws RemoteException, SQLException;
+    public Order handlePlaceOrder(Account session, ShoppingCart shoppingCart,String shippingAddress) throws RemoteException, SQLException;
 	@RequiresRole("CUSTOMER")
-	public List<Order> handleGetOrderHistory(Account account)throws RemoteException;
+	public List<Order> handleGetOrderHistory(Account account) throws RemoteException, SQLException;
+
+   public ShoppingCart handleClearCart(Account account, int cartId) throws RemoteException, SQLException;
 }

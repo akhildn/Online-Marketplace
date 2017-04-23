@@ -50,7 +50,6 @@ public class ShoppingCartDAO {
                     product.getProductId();
             ResultSet rs =statement.executeQuery(query);
             if(rs.next()){
-                quantity+= rs.getInt("quantity");
                 statement.executeUpdate("update cart_items set quantity=quantity+"+quantity+"" +
                         " , total_item_price=" +(product.getUnitPrice()*quantity)+
                         " where cart_id="+cartId+" and product_id="+
@@ -108,9 +107,13 @@ public class ShoppingCartDAO {
     }
 
     //clears the shopping  cart for a specific user
-    /*public void clearCart(String username) {
-        if(shoppingCartHashMap.get(username) != null){
-            shoppingCartHashMap.put(username,new ShoppingCart());
+    public void clearCart(int cartId) throws SQLException {
+        String query = "select * from anayabu_db.shopping_cart where cart_id='"+cartId+"'";
+        Statement statement = (Statement) dbConnection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+        if(resultSet.next()){
+            statement.executeUpdate("delete from cart_items where cart_id='"+cartId+"'");
+            statement.executeUpdate("update shopping_cart set cart_total=0.000 where cart_id="+cartId);
         }
-    }*/
+    }
 }

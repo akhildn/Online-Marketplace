@@ -15,8 +15,8 @@ public class PurchaseHandler implements  MarketplaceHandler{
 
     private MarketplaceFrontController frontController;
     private ShoppingCart shoppingCart;
-    private Address shippingAddress;
-    public PurchaseHandler(MarketplaceFrontController frontController, ShoppingCart shoppingCart, Address shippingAddress) {
+    private String shippingAddress;
+    public PurchaseHandler(MarketplaceFrontController frontController, ShoppingCart shoppingCart, String shippingAddress) {
         this.frontController = frontController;
         this.shoppingCart = shoppingCart;
         this.shippingAddress = shippingAddress;

@@ -145,7 +145,7 @@ public class MarketplaceFrontController {
     }
 
     // processes order and go to purchase view where it displays which items where places and which were not
-    public void handlePurchase(ShoppingCart shoppingCart, Address shippingAddress) throws RemoteException {
+    public void handlePurchase(ShoppingCart shoppingCart, String shippingAddress) throws RemoteException {
         if(isAuthenticate) {
             try {
                 Order order = controller.handlePlaceOrder(session, shoppingCart, shippingAddress);
@@ -159,8 +159,21 @@ public class MarketplaceFrontController {
     // to get history of orders which placed by the user
     public void handlePurchaseHistory() throws RemoteException {
         if(isAuthenticate){
-            List<Order> orderList = controller.handleGetOrderHistory(session);
-            dispatcher.dispatch("ORDER_HISTORY", orderList, this);
+            try {
+                List<Order> orderList = controller.handleGetOrderHistory(session);
+                dispatcher.dispatch("ORDER_HISTORY", orderList, this);
+            }catch(SQLException e){
+                dispatchRequest("PAGE_NOT_FOUND", session);
+            }
+        }
+    }
+
+    public void handleClearCart(int cartId) throws RemoteException {
+        try {
+            ShoppingCart shoppingCart = controller.handleClearCart(session, cartId);
+            dispatcher.dispatch("CART_VIEW", shoppingCart, this);
+        } catch (SQLException e) {
+            dispatchRequest("PAGE_NOT_FOUND", session);
         }
     }
 }

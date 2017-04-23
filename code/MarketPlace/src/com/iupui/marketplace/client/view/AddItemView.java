@@ -28,9 +28,6 @@ public class AddItemView implements  MarketplaceView{
         // if yes takes in the new product details
         if(choice.equalsIgnoreCase("yes")){
             Product product = new Product();
-            System.out.println("Enter Product id:");
-            int id = in.nextInt();
-            product.setProductId(id);
 
             System.out.println("Enter Product Name:");
             String name = in.next();
@@ -47,6 +44,10 @@ public class AddItemView implements  MarketplaceView{
             System.out.println("Enter Product Unit Count:");
             int quantity = in.nextInt();
             product.setUnitCount(quantity);
+
+            if(quantity > 0){
+                product.setAvailable(true);
+            }
 
             // passes these details of product which is to be added
             boolean isSuccess = frontController.handleAddItem(product);

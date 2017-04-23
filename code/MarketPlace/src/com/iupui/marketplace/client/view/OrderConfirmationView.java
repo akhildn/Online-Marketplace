@@ -37,9 +37,8 @@ public class OrderConfirmationView implements MarketplaceView {
             }
         }
         if(flag) {
-            DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            System.out.println("Order Date: " + sdf.format(order.getOrderDate()));
-            System.out.println("Order Shipped to: " + order.getShippingAddress().toString());
+            System.out.println("Order Date: " + order.getOrderDate());
+            System.out.println("Order Shipped to: " + order.getShippingAddress());
             System.out.println("Order Sub-Total:" + order.getOrderSubtotal());
             System.out.println("Order Tax:" + order.getTax());
             System.out.println("Order Total:" + order.getOrderTotal());
@@ -58,7 +57,6 @@ public class OrderConfirmationView implements MarketplaceView {
             }
         }
         nextView();
-
     }
 
     // prints details of items which were in the order
