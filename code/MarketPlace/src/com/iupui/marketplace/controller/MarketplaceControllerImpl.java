@@ -3,8 +3,11 @@ package com.iupui.marketplace.controller;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
+import com.iupui.marketplace.client.MarketplaceFrontController;
 import com.iupui.marketplace.database.MarketplaceDBConnection;
 import com.iupui.marketplace.dao.AccountDAO;
 import com.iupui.marketplace.dao.OrderDAO;
@@ -18,6 +21,7 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	
 
 	private static final long serialVersionUID = 1L;
+    public static ConcurrentHashMap<Integer, Object> productLockMap = new ConcurrentHashMap<Integer, Object>();
 
 	public MarketplaceControllerImpl() throws RemoteException{
 		MarketplaceDBConnection.getMarketplaceDbConnection();
@@ -70,14 +74,40 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 
     @Override
     public boolean handleUpdateProduct(Account session, Product product) throws RemoteException, SQLException {
+		boolean status;
         ProductDAO productDAO = new ProductDAO();
-        return productDAO.updateProduct(product);
+        System.out.println(Thread.currentThread().getName() +" -: update product entry ");
+        MarketplaceControllerImpl.productLockMap.putIfAbsent(product.getProductId(), new Object());
+        synchronized(MarketplaceControllerImpl.productLockMap.get(product.getProductId())){
+        	//
+			System.out.println(Thread.currentThread().getName() +" -: update product critical section ");
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			status = productDAO.updateProduct(product);
+        }
+		System.out.println(Thread.currentThread().getName() +" -: update product exit ");
+		return status;
     }
 
     @Override
     public boolean handleRemoveProduct(Account session, int productId) throws RemoteException, SQLException {
+        boolean status;
         ProductDAO productDAO = new ProductDAO();
-        return  productDAO.removeProduct(productId);
+        MarketplaceControllerImpl.productLockMap.putIfAbsent(productId, new Object());
+        synchronized(MarketplaceControllerImpl.productLockMap.get(productId)){
+            //
+            System.out.println(Thread.currentThread().getName() +" -: update product critical section ");
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            status = productDAO.removeProduct(productId);
+        }
+        return  status;
     }
 
     // Will return true is item is added to cart

@@ -10,12 +10,11 @@ import com.mysql.jdbc.Statement;
  * Created by anaya on 4/17/2017.
  */
 
-// Database connection class
+// Singleton database connection class
 public class MarketplaceDBConnection {
 
     public Connection connection = null;
-    public static MarketplaceDBConnection dbConnection;
-    private Statement statement;
+    public static volatile MarketplaceDBConnection dbConnection;
 
     private MarketplaceDBConnection(){
         // credentials and connection parameters for mysql connection through jdbc
@@ -42,12 +41,25 @@ public class MarketplaceDBConnection {
         return connection;
     }
 
-    public static synchronized MarketplaceDBConnection getMarketplaceDbConnection() {
+    public static MarketplaceDBConnection getMarketplaceDbConnection() {
+        /*
+        * synchronized keyword is used to make sure that only one DB connection object is created
+        * even when 2 threads are trying to invoke this method at same time.
+        * double scoping locking is implemented.
+        * */
         if ( dbConnection == null ) {
-            System.out.println("creating new db object");
-            dbConnection = new MarketplaceDBConnection();
+            synchronized (MarketplaceDBConnection.class){
+             /*
+             * this null check is useful when 2 threads were invoked db connection at the same time
+             * for the first time and db connection object is not initialized from previous clients.
+             * only the first thread will create the object and 2nn will reuse the object created by 1st.
+             * */
+             if(dbConnection == null) {
+                 dbConnection = new MarketplaceDBConnection();
+                 System.out.println("creating new db object");
+             }
+            }
         }
-        System.out.println("reusing same db object");
         return dbConnection;
     }
 

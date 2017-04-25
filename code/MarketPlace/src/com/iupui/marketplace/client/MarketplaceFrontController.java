@@ -6,6 +6,10 @@ import com.iupui.marketplace.model.beans.*;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 // Ryan: Please include useful comments in each file.
 //Fixed: Comments are included in each file.
@@ -147,9 +151,23 @@ public class MarketplaceFrontController {
     public void handlePurchase(ShoppingCart shoppingCart, String shippingAddress) throws RemoteException {
         if(isAuthenticate) {
             try {
-                Order order = controller.handlePlaceOrder(session, shoppingCart, shippingAddress);
+                Callable<Order> callable = new Callable<Order>() {
+
+                    @Override
+                    public Order call() throws Exception {
+                        // TODO Auto-generated method stub
+                        return controller.handlePlaceOrder(session, shoppingCart, shippingAddress);
+                    }
+                };
+                ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+                Future<Order> future = executor.submit(callable);
+                System.out.println("Placing order, please wait....");
+                while(!future.isDone()) {
+                }
+                System.out.println("Order placed redirecting to order details page");
+                Order order = future.get();
                 dispatcher.dispatch("ORDER_CONFIRMATION", order, this);
-            }catch (SQLException e){
+            }catch (Exception e){
                 dispatchRequest("PAGE_NOT_FOUND", session);
             }
         }
