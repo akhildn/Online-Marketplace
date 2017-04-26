@@ -87,13 +87,20 @@ public class ProductDAO {
         // for every item in the cart checks if item is still available
 
         for(Item item : cartItems) {
-
-            /*
-            *
-            * */
-
             System.out.println(Thread.currentThread().getName() +" -: purchase item entry ");
+
+            // checks if there is already an object attached to the mentioned key: productId, if no object is associated
+            // then a object is created and associated to it. If yes, then it will return the existing object
+            // Ref: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentMap.html#putIfAbsent(K,%20V)
             MarketplaceControllerImpl.productLockMap.putIfAbsent(item.getProduct().getProductId(), new Object());
+
+            // synchronized on productId, i.e when customer thread is trying to processing a order of a specific product
+            // and admin thread is trying update the same product, we may get issues when this happen concurrently, to avoid
+            // update and purchase happen same time we used product id as the monitor object criteria to achieve
+            // synchronization. To achieve this synchronization between methods of 2 different classes i.e. purchase
+            // and update product method, we need make use of the same monitor object to achieve synchronization.
+
+            // this also ensures no 2 customer threads can process an same product at the same time.Q
             synchronized(MarketplaceControllerImpl.productLockMap.get(item.getProduct().getProductId())) {
 
                 System.out.println(Thread.currentThread().getName() +" -: purchase item critical entry ");
@@ -133,11 +140,9 @@ public class ProductDAO {
                         orderItem.setQuantity(item.getQuantity());
                     }
                 }
-
                 //item in the order is processed and added to order list of items
                 orderItems.add(orderItem);
             }
-
             System.out.println(Thread.currentThread().getName() +" -: purchase item exit ");
         }
         // returns final processed order items
@@ -146,20 +151,12 @@ public class ProductDAO {
 
     // updates product quantity
     private boolean updateProductQuantity(int productId, int orderQuantity) throws SQLException {
-       /* Product product =getProductDetails(productId);
-        if(product!=null){
-                int quantity = (product.getUnitCount()-orderQuantity);*/
-                Statement statement = (Statement) dbConnection.createStatement();
-               int status =  statement.executeUpdate("update anayabu_db.product set unit_count= unit_count - "
-                       +orderQuantity+" where product_id="
+        Statement statement = (Statement) dbConnection.createStatement();
+        int status =  statement.executeUpdate("update anayabu_db.product set unit_count= unit_count - "
+                        +orderQuantity+" where product_id="
                         +productId);
-
-               return status == 0 ? false:true;
-           /* }
-        return false;*/
+        return status == 0 ? false:true;
     }
-
-
 
     // checks if request quantity is still available
     public boolean isProductAvailable(int productId, int quantity) throws SQLException {
@@ -172,13 +169,14 @@ public class ProductDAO {
 
     public boolean updateProduct(Product product) throws SQLException {
         if(product!=null) {
+            // update query
             String updateQuery = " update product set product_name='" + product.getProductName() + "'," +
                     " description='" +
                     product.getDescription() + "', unit_price=" + product.getUnitPrice() + ", unit_count=" +
                     product.getUnitCount() + ", availability=" + product.isAvailable() + " where product_id="
                     + product.getProductId();
-            System.out.println(updateQuery);
             Statement statement = (Statement) dbConnection.createStatement();
+            //executes the query
             statement.executeUpdate(updateQuery);
             return  true;
         }
@@ -186,9 +184,12 @@ public class ProductDAO {
     }
 
     public boolean removeProduct(int productId) throws SQLException {
+        // delete query
         String removeQuery = " delete from product where product_id ="+productId;
         Statement statement = (Statement) dbConnection.createStatement();
+        //excutes the query
         int isRemoved = statement.executeUpdate(removeQuery);
+        // if at least 1 row is effected then returns true
         if(isRemoved != 0){
             return  true;
         }

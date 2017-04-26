@@ -7,6 +7,8 @@ import java.rmi.RemoteException;
 /**
  * Created by anaya on 4/22/2017.
  */
+
+// Command Receiver
 public class UpdateProductHandler implements MarketplaceHandler {
 
     private  MarketplaceFrontController frontController;

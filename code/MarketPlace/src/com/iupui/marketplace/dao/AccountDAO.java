@@ -41,17 +41,14 @@ public class AccountDAO {
         Account account = new Account();
         // gets account details
         String query = "select * from anayabu_db.account where username='"+username+"'";
-        System.out.println(query);
         Statement statement = (Statement) dbConnection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         // if true populates account object
         if(resultSet.next()){
             account.setUsername(resultSet.getString("username"));
-            System.out.println("user:"+ account.getUsername());
             account.setPassword(resultSet.getString("password"));
             account.setEmail(resultSet.getString("email"));
             account.setUserType(resultSet.getString("user_type"));
-            System.out.println("user:"+ account.getUserType());
             account.setSecurityQuestion(resultSet.getString("security_question"));
             account.setSecurityAnswer(resultSet.getString("security_answer"));
             return  account;

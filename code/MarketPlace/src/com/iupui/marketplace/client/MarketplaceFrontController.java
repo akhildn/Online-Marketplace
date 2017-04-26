@@ -148,6 +148,7 @@ public class MarketplaceFrontController {
     }
 
     // processes order and go to purchase view where it displays which items where places and which were not
+    // future pattern used to print an assurance message stating order is being processed.
     public void handlePurchase(ShoppingCart shoppingCart, String shippingAddress) throws RemoteException {
         if(isAuthenticate) {
             try {
@@ -164,10 +165,12 @@ public class MarketplaceFrontController {
                 System.out.println("Placing order, please wait....");
                 while(!future.isDone()) {
                 }
+                System.out.println("_______________________________________________________________________________");
                 System.out.println("Order placed redirecting to order details page");
                 Order order = future.get();
                 dispatcher.dispatch("ORDER_CONFIRMATION", order, this);
             }catch (Exception e){
+                e.printStackTrace();
                 dispatchRequest("PAGE_NOT_FOUND", session);
             }
         }
@@ -185,6 +188,7 @@ public class MarketplaceFrontController {
         }
     }
 
+    // calls clear carts method and redirects to cart view
     public void handleClearCart(int cartId) throws RemoteException {
         try {
             ShoppingCart shoppingCart = controller.handleClearCart(session, cartId);
@@ -195,6 +199,7 @@ public class MarketplaceFrontController {
     }
 
 
+    // redirects to remove product view
     public void handleRemoveProductView() throws RemoteException {
         if(isAuthenticate){
             try {
@@ -207,11 +212,11 @@ public class MarketplaceFrontController {
         }
     }
 
+    // redirects to update product view
     public void handleUpdateProductView() throws RemoteException {
         if(isAuthenticate){
             try {
-                List<Product> productList;
-                productList = controller.handleBrowseItems();
+                List<Product> productList = controller.handleBrowseItems();;
                 dispatcher.dispatch("UPDATE_PRODUCT", productList, this);
             }catch (SQLException e){
                 dispatchRequest("PAGE_NOT_FOUND", session);
@@ -219,25 +224,56 @@ public class MarketplaceFrontController {
         }
     }
 
+    // calls update product, future pattern used here, a message is printed assuring that its in process will be done
+    // soon
 
     public boolean handleUpdateProduct(Product product) throws RemoteException {
         boolean isUpdated = false;
         try {
-             isUpdated = controller.handleUpdateProduct(session, product);
-        }catch (SQLException e){
+            Callable<Boolean> callable = new Callable<Boolean>() {
+
+                @Override
+                public Boolean call() throws Exception {
+                    return controller.handleUpdateProduct(session, product);
+
+                }
+            };
+            ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+            Future<Boolean> future = executor.submit(callable);
+            System.out.println("Updating product, please wait....");
+            while(!future.isDone()) {
+            }
+            System.out.println("_______________________________________________________________________________");
+             isUpdated =future.get();
+        }catch (Exception e){
             dispatchRequest("PAGE_NOT_FOUND", session);
         }
         return isUpdated;
     }
 
+    // calls remove product method, future pattern used here, a message is printed assuring that its in process
+    // will be done soon
     public boolean handleRemoveProduct(int productId) throws RemoteException {
         boolean isRemoved = false;
         try {
-            isRemoved = controller.handleRemoveProduct(session, productId);
-        }catch (SQLException e){
+            Callable<Boolean> callable = new Callable<Boolean>() {
+
+                @Override
+                public Boolean call() throws Exception {
+                    return controller.handleRemoveProduct(session, productId);
+
+                }
+            };
+            ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+            Future<Boolean> future = executor.submit(callable);
+            System.out.println("removing product, please wait....");
+            while(!future.isDone()) {
+            }
+            System.out.println("_______________________________________________________________________________");
+            isRemoved =future.get();
+        }catch (Exception e){
             dispatchRequest("PAGE_NOT_FOUND", session);
         }
         return isRemoved;
-
     }
 }

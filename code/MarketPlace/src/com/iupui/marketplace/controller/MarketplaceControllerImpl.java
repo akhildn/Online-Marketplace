@@ -3,11 +3,9 @@ package com.iupui.marketplace.controller;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.iupui.marketplace.client.MarketplaceFrontController;
 import com.iupui.marketplace.database.MarketplaceDBConnection;
 import com.iupui.marketplace.dao.AccountDAO;
 import com.iupui.marketplace.dao.OrderDAO;
@@ -18,12 +16,12 @@ import com.iupui.marketplace.model.beans.*;
 // Ryan: Please include useful comments in each file.
 // Fixed: Comments are included in each file.
 public class MarketplaceControllerImpl extends UnicastRemoteObject implements MarketplaceController {
-	
 
 	private static final long serialVersionUID = 1L;
     public static ConcurrentHashMap<Integer, Object> productLockMap = new ConcurrentHashMap<Integer, Object>();
 
 	public MarketplaceControllerImpl() throws RemoteException{
+	    // makes connection to database on starting the server.
 		MarketplaceDBConnection.getMarketplaceDbConnection();
     }
 
@@ -42,7 +40,6 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 		// Below method checks if entered credentials are actually valid.
 		AccountDAO accountDAO = new AccountDAO();
 		boolean isValid = accountDAO.validateCredentials(username,password);
-		System.out.println(isValid);
 		if(isValid){
 			 return accountDAO.getAccountDetails(username);
 		}
@@ -72,14 +69,26 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 	    return productDAO.addNewItem(product);
 	}
 
+	// returns true is product is updated.
     @Override
     public boolean handleUpdateProduct(Account session, Product product) throws RemoteException, SQLException {
 		boolean status;
         ProductDAO productDAO = new ProductDAO();
         System.out.println(Thread.currentThread().getName() +" -: update product entry ");
+
+        // checks if there is already an object attached to the mentioned key: productId, if no object is associated
+        // then a object is created and associated to it. If yes, then it will return the existing object
+        // Ref : https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentMap.html#putIfAbsent(K,%20V)
         MarketplaceControllerImpl.productLockMap.putIfAbsent(product.getProductId(), new Object());
+
+        // synchronized on productId, i.e when customer thread is trying to processing a order of a specific product
+        // and admin thread is trying update the same product, we may get issues when this happen concurrently, to avoid
+        // update and purchase happen same time we used product id as the monitor object criteria to achieve
+        // synchronization. To achieve this synchronization between methods of 2 different classes i.e. purchase
+        // and update product method, we need make use of the same monitor object to achieve synchronization.
+
+        // this also ensures no 2 admin threads can update an same product at the same time
         synchronized(MarketplaceControllerImpl.productLockMap.get(product.getProductId())){
-        	//
 			System.out.println(Thread.currentThread().getName() +" -: update product critical section ");
 			try {
 				Thread.sleep(10000);
@@ -96,10 +105,23 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
     public boolean handleRemoveProduct(Account session, int productId) throws RemoteException, SQLException {
         boolean status;
         ProductDAO productDAO = new ProductDAO();
+        System.out.println(Thread.currentThread().getName() +" -: remove product entry ");
+
+        // checks if there is already an object attached to the mentioned key: productId, if no object is associated
+        // then a object is created and associated to it. If yes, then it will return the existing object
+        // Ref : https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/ConcurrentMap.html#putIfAbsent(K,%20V)
         MarketplaceControllerImpl.productLockMap.putIfAbsent(productId, new Object());
+
+        // synchronized on productId, i.e when customer thread is trying to processing a order of a specific product
+        // and admin thread is trying update the same product, we may get issues when this happen concurrently, to avoid
+        // update and purchase happen same time we used product id as the monitor object criteria to achieve
+        // synchronization. To achieve this synchronization between methods of 2 different classes i.e. purchase
+        // and update product method, we need make use of the same monitor object to achieve synchronization.
+
+        // this also ensures no 2 admin threads can remove an same product at the same time
+
         synchronized(MarketplaceControllerImpl.productLockMap.get(productId)){
-            //
-            System.out.println(Thread.currentThread().getName() +" -: update product critical section ");
+            System.out.println(Thread.currentThread().getName() +" -: remove product critical section ");
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
@@ -107,12 +129,14 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
             }
             status = productDAO.removeProduct(productId);
         }
+        System.out.println(Thread.currentThread().getName() +" -: remove product exit ");
         return  status;
     }
 
     // Will return true is item is added to cart
 	@Override
-	public boolean handleAddToCart(Account account, Product product, int quantity) throws RemoteException, SQLException {
+	public boolean handleAddToCart(Account account, Product product, int quantity) throws RemoteException,
+            SQLException {
 		ShoppingCartDAO shoppingCartDAO = new ShoppingCartDAO();
         return shoppingCartDAO.addToCart(account,product,quantity);
 
@@ -156,32 +180,5 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 		ShoppingCart shoppingCart = shoppingCartDAO.getCartDetails(account);
 		return  shoppingCart;
 	}
-
-
-	//TODO : All the below methods are yet to be implemented
-	@Override
-	public List<ProductCategory> handleListProductCategories() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Product> handleBrowseItemsByCategoryId(int categoryId) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Product> handleBrowseItemsByCategoryName(String categoryName) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Product> handleBrowseItemsByProductName(String productName) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

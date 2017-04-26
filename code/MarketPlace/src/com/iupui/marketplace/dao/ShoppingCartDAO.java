@@ -32,10 +32,12 @@ public class ShoppingCartDAO {
         ResultSet resultSet = statement.executeQuery(query);
         // if result set is empty
         if(!resultSet.next()){
+            // creates a cart_id for user
             query = " insert into anayabu_db.shopping_cart (username,cart_total) values('"+account.getUsername()
                     +"',0.000)";
             statement = (Statement) dbConnection.createStatement();
             statement.executeUpdate(query);
+            // to get cart_id and total of already existing cart associated to the user
             ResultSet rs = statement.executeQuery("select * from anayabu_db.shopping_cart where username='"+
             account.getUsername()+"'");
             if(rs.next()) {
@@ -46,26 +48,31 @@ public class ShoppingCartDAO {
         else{
             cartId = resultSet.getInt("cart_id");
             cartTotal = resultSet.getDouble("cart_total");
+            // to check if the item added is already in cart, if already in cart only the quantity is updated.
             query = " select quantity from anayabu_db.cart_items where cart_id="+cartId+" and product_id="+
                     product.getProductId();
             ResultSet rs =statement.executeQuery(query);
             if(rs.next()){
+                // updates item quantity for already existing cart item in the cart
                 statement.executeUpdate("update cart_items set quantity=quantity+"+quantity+"" +
                         " , total_item_price=" +(product.getUnitPrice()*quantity)+
                         " where cart_id="+cartId+" and product_id="+
                         product.getProductId());
 
                 double newTotal = cartTotal +  (product.getUnitPrice()*quantity) ;
+                // updates the cart total
                 statement.executeUpdate("update anayabu_db.shopping_cart set cart_total="+newTotal+"where cart_id="
                         + cartId);
                 return true;
             }
 
         }
+        // adds item to the cart
         String insertCartQuery = " insert into anayabu_db.cart_items values("+cartId+","+product.getProductId()+
                 ","+quantity+","+(product.getUnitPrice()*quantity)+")";
         statement.executeUpdate(insertCartQuery);
         double newTotal = cartTotal +  (product.getUnitPrice()*quantity) ;
+        // updates new cart total after item has been added.
         statement.executeUpdate("update anayabu_db.shopping_cart set cart_total="+newTotal+"where cart_id="
                                 + cartId);
         return true;
@@ -75,6 +82,7 @@ public class ShoppingCartDAO {
     public ShoppingCart getCartDetails(Account account) throws SQLException {
         List<Item> itemList = new ArrayList<>();
         ShoppingCart shoppingCart = new ShoppingCart();
+        // retrieves all cart items and cart details associated to the username
         String query = "select s.cart_id as cart_id, s.username as username, s.cart_total as cart_total,"+
                 " c.product_id as product_id, c.quantity as quantity, c.total_item_price as total_item_price,"+
                 "p.product_name as product_name, p.description as description, p.unit_price as unit_price, " +

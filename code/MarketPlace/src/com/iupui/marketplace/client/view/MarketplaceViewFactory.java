@@ -18,7 +18,7 @@ public class MarketplaceViewFactory extends MarketplaceViewAbstractFactory {
     @Override
     public MarketplaceView getView(String type) {
         MarketplaceView marketplaceView;
-        // will call browse view, view might change in future assignments
+        // checks condition and calls specific view on satisfied condition
         if(type.equals("BROWSE")){
             marketplaceView = new BrowseView(frontController);
             return marketplaceView;

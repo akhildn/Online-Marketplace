@@ -9,6 +9,8 @@ import java.rmi.RemoteException;
 /**
  * Created by anaya on 4/22/2017.
  */
+
+// Concrete Command
 public class RemoveProductCommand implements MarketplaceCommand {
 
     MarketplaceHandler handler;

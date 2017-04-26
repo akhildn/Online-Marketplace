@@ -12,7 +12,6 @@ public class Product implements Serializable {
 	private double unitPrice;
 	private int unitCount;
 	private boolean isAvailable;
-	private List<ProductCategory> productCategories;
 	
 	/**
 	 * @return the productId
@@ -86,12 +85,5 @@ public class Product implements Serializable {
 	public void setAvailable(boolean isAvailable) {
 		this.isAvailable = isAvailable;
 	}
-	public List<ProductCategory> getProductCategories() {
-		return productCategories;
-	}
-	public void setProductCategories(List<ProductCategory> productCategories) {
-		this.productCategories = productCategories;
-	}
-	
-	
+
 }

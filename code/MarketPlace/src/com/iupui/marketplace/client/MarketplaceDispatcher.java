@@ -80,12 +80,14 @@ public class MarketplaceDispatcher {
                 purchaseHistoryView.bindData((List<Order>) object);
                 purchaseHistoryView.show();
             }
+            // remove product view, displays all products id and asks for id which is to be removed
             else if(page.equals("REMOVE_PRODUCT")){
                 MarketplaceViewAbstractFactory factoryView = new MarketplaceViewFactory(frontController);
                 RemoveProductView removeProductView = (RemoveProductView) factoryView.getView("REMOVE_PRODUCT");
                 removeProductView.bindData((List<Product>) object);
                 removeProductView.show();
             }
+            // update product view, displays all products id and asks for id which is to be updated
             else if(page.equals("UPDATE_PRODUCT")){
                 MarketplaceViewAbstractFactory factoryView = new MarketplaceViewFactory(frontController);
                 UpdateProductView updateProductView = (UpdateProductView) factoryView.getView("UPDATE_PRODUCT");
@@ -96,6 +98,9 @@ public class MarketplaceDispatcher {
             else if (page.equals("INVALID_CREDENTIALS")) {
                 MarketplaceViewAbstractFactory factoryView = new ErrorViewFactory(frontController);
                 factoryView.getView(page).show();
+            }else if(page.equals("PAGE_NOT_FOUND")){
+                MarketplaceViewAbstractFactory factoryView = new ErrorViewFactory(frontController);
+                factoryView.getView("PAGE_NOT_FOUND").show();
             }
         }
         // Common exception
@@ -103,8 +108,9 @@ public class MarketplaceDispatcher {
             MarketplaceViewAbstractFactory factoryView = new ErrorViewFactory(frontController);
             // Authorization handler exception message
             System.out.println(ex.getMessage());
+            // todo : remove
             ex.printStackTrace();
-             factoryView.getView("PAGE_NOT_FOUND").show();
+            factoryView.getView("PAGE_NOT_FOUND").show();
         }
     }
 }

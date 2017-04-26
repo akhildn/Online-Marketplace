@@ -14,6 +14,7 @@ public class OrderDAO {
 
     private Connection dbConnection;
     public OrderDAO(){
+        // gets the connection object i.e.
         dbConnection = MarketplaceDBConnection.getMarketplaceDbConnection().getConnection();
     }
 
@@ -36,21 +37,25 @@ public class OrderDAO {
         double tax = subTotal * 0.07;
         order.setTax(tax);
         order.setOrderTotal(subTotal+tax);
+        // inserts order details of the order placed.
         String insertQuery = "insert into anayabu_db.order_details (order_id,order_date,order_status,order_sub_total," +
                 "order_tax," +
                 "order_total,"+ "shipping_address,username) values('"+order.getOrderId() +"','" +
                 order.getOrderDate()+"','"+order.getOrderStatus()+"',"+
                 order.getOrderSubtotal()+","+order.getTax()+","+order.getOrderTotal()+",'"+
                 order.getShippingAddress().toString()+"','"+session.getUsername()+"')";
+        //executes the query
         statement.executeUpdate(insertQuery);
         for(Item item:orderItems) {
+            // inserts item detials of each item in order into DB
             insertQuery = "insert into order_items (order_id,oi_product_id,oi_product_name,oi_description,oi_unit_price," +
-                    "oi_unit_count,oi_availability,oi_status_message,oi_total_item_price,oi_quantity) values('" +
+                    "oi_availability,oi_status_message,oi_total_item_price,oi_quantity) values('" +
                     order.getOrderId() + "'," + item.getProduct().getProductId()+",'"+ item.getProduct().getProductName()+
                     "','"+item.getProduct().getDescription()+"',"+item.getProduct().getUnitPrice()+","+
-                    item.getProduct().getUnitCount()+","+ item.isAvailable()+",'"+ item.getStatusMessage()+"',"+
+                    item.isAvailable()+",'"+ item.getStatusMessage()+"',"+
                     item.getTotalItemPrice()+","+item.getQuantity()+")";
-            statement.executeUpdate(insertQuery);
+            Statement statement1 =  (Statement) dbConnection.createStatement();
+            statement1.executeUpdate(insertQuery);
         }
         return order;
     }
@@ -73,27 +78,29 @@ public class OrderDAO {
         Order order;
         List<Order> orderList = new ArrayList<>();
         List<Item> orderItems = new ArrayList<>();
+        // retrieves all the orders associated with the username
         String query = " select * from order_details where username='"+session.getUsername()+"' order by order_date " +
                 "desc ";
         Statement statement = (Statement) dbConnection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         while(resultSet.next()) {
             order = new Order();
-            String date = getDate();
-            order.setOrderDate(date);
-            order.setOrderId(session.getUsername()+ System.currentTimeMillis());
+            orderItems = new ArrayList<>();
+            order.setOrderDate(resultSet.getString("order_date"));
+            order.setOrderId(resultSet.getString("order_id"));
+            // retrieves all the items associated with that orderId
             String queryItems = "select * from order_items where order_id='"+resultSet.getString("order_id")+
                     "'";
             Statement statement1 = (Statement) dbConnection.createStatement();
             ResultSet rs=statement1.executeQuery(queryItems);
             while(rs.next()){
+                // populates orderItems and product details
                 orderItem = new Item();
                 Product product= new Product();
                 product.setProductId(rs.getInt("oi_product_id"));
                 product.setProductName(rs.getString("oi_product_name"));
                 product.setDescription(rs.getString("oi_description"));
                 product.setUnitPrice(rs.getDouble("oi_unit_price"));
-                product.setUnitCount(rs.getInt("oi_unit_count"));
                 product.setAvailable(rs.getBoolean("oi_availability"));
                 orderItem.setProduct(product);
                 orderItem.setAvailable(rs.getBoolean("oi_availability"));
@@ -102,6 +109,7 @@ public class OrderDAO {
                 orderItem.setQuantity(rs.getInt("oi_quantity"));
                 orderItems.add(orderItem);
             }
+            // adds order items into list
             order.setOrderItems(orderItems);
             order.setOrderStatus(resultSet.getString("order_status"));
             order.setShippingAddress(resultSet.getString("shipping_address"));
@@ -110,11 +118,13 @@ public class OrderDAO {
             double tax = subTotal * 0.07;
             order.setTax(resultSet.getDouble("order_tax"));
             order.setOrderTotal(resultSet.getDouble("order_total"));
+            // adds order into the list
             orderList.add(order);
             }
             return orderList;
         }
 
+    // converts date to the format which is used on DB
     public String getDate() {
         java.util.Date dt = new java.util.Date();
         java.text.SimpleDateFormat sdf =
