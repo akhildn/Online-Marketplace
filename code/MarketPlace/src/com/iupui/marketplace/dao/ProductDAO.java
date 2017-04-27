@@ -74,7 +74,6 @@ public class ProductDAO {
         String insertProductQuery = " insert into product (product_name,description,unit_price,unit_count,availability"
                 + ") values ( '"+product.getProductName()+"','"+product.getDescription()+"',"
                 +product.getUnitPrice()+","+product.getUnitCount()+","+product.isAvailable()+")";
-        System.out.println(insertProductQuery);
         Statement statement = (Statement) dbConnection.createStatement();
         int status = statement.executeUpdate(insertProductQuery);
         return status==1 ? true : false;

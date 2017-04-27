@@ -45,7 +45,8 @@ public class RemoveProductView implements MarketplaceView {
                boolean isRemoved = frontController.handleRemoveProduct(productId);
                // if true prints notice
                if(isRemoved){
-                   System.out.println("*****************************\t product removed*****************************");
+                   System.out.println("*****************************\t product removed *****************************");
+                   frontController.homeRedirect();
                }
             } else {
                 // if input did not match any product id then asks again for product id
