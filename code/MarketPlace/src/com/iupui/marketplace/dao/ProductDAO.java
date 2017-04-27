@@ -141,8 +141,9 @@ public class ProductDAO {
                 }
                 //item in the order is processed and added to order list of items
                 orderItems.add(orderItem);
+                System.out.println(Thread.currentThread().getName() +" -: purchase item exit ");
             }
-            System.out.println(Thread.currentThread().getName() +" -: purchase item exit ");
+
         }
         // returns final processed order items
         return orderItems;

@@ -96,8 +96,8 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 				e.printStackTrace();
 			}
 			status = productDAO.updateProduct(product);
+			System.out.println(Thread.currentThread().getName() +" -: update product exit ");
         }
-		System.out.println(Thread.currentThread().getName() +" -: update product exit ");
 		return status;
     }
 
@@ -128,8 +128,9 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
                 e.printStackTrace();
             }
             status = productDAO.removeProduct(productId);
+			System.out.println(Thread.currentThread().getName() +" -: remove product exit ");
         }
-        System.out.println(Thread.currentThread().getName() +" -: remove product exit ");
+
         return  status;
     }
 
