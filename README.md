@@ -1,3 +1,67 @@
+Assignment #5
+Given Task: In Assignment #5, you will be examining the impact that the concept that Synchronization has on our application. As we saw in Assignment #4, there are many significant challenges with respect to the construction of multi-threaded or concurrent systems. As part of this assignment you were tasked with examining some solutions to the challenges that you identified – often these challenges/problems were ones that could directly be solved through the use of Synchronization design patterns. 
+
+The focus of this assignment is to apply the information we have learned regarding the use of synchronization in the Java programming language to ensure that access to our shared resources are indeed thread-safe. Specifically, we will be examining how Java implements the following patterns: Monitor Object, Future, Guarded Suspension, Scoped Locking, and Thread-Safe Interface. Your job is to make use of the various Java defined constructs to accomplish this thread-safety within our application. As part of this assignment you will need to make sure that your application now makes use of the MySQL database that has been setup for us to use on: (in-csci-rrpc01.cs.iupui.edu). In addition, as this will be the last assignment for the semester, you are expected to fully complete all of the required functions as outlined in the project specifications. You should use good design practices, principles, and patterns, when applicable, to accomplish this. This final submission should be a polished product and something that should be proud of. 
+
+For this assignment we will make use of the following machines (listed on this page) to demonstrate the role of synchronization and the functionality of your application in a concurrent environment. Your server should demonstrate the ability to handle multiple concurrent requests from different clients. These clients should be able to run on any of the given machines and should locate the server running on a given machine. For this assignment we will, again, make the assumption that there is only ever one server but many clients. All of the other requirements are still valid. Any updates to your design should be reflected in your domain model, software architectural model, and a discussion of these new design decisions as part of your report. This final report should contain a complete overview and all proper documentation related to the creation of this application and the ongoing work we have done this semester. 
+
+Your code should be properly documented and should make use of common language standards and implementation practices. This code should be your own work – each student should submit their own project; failure to do so or any student caught cheating will be subject to the IUPUI guidelines on academic dishonesty as provided in the course syllabus.
+
+Directory Structure:
+.
+├── code
+│   └── MarketPlace
+│       ├── lib
+│       ├── nbproject
+│       │   └── private
+│       └── src
+│           └── com
+│               └── iupui
+│                   └── marketplace
+│                       ├── client
+│                       │   ├── command
+│                       │   ├── handlers
+│                       │   └── view
+│                       ├── controller
+│                       ├── dao
+│                       ├── database
+│                       ├── model
+│                       │   └── beans
+│                       └── server
+└── docs
+
+Server on : 10.234.136.55
+Clients on : 10.234.136.56, 10.234.136.57, 10.234.136.58, 10.234.136.59, 10.234.136.60
+
+Database:
+https://in-csci-rrpc01.cs.iupui.edu/phpmyadmin/
+Username: anayabu
+password: marketplace
+
+{username:password} =
+Admins :   {admin1:admin,admin2:admin}
+customers: {user1:user,user2:user,user3:user,user4:user,user5:user,user6:user}
+
+
+Compilation through make file:
+-go to csci50700_spring2017_marketplace/code/MarketPlace/src/ 
+$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/
+-run make
+$ make
+
+Execution Instructions:
+make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
+-run rmiregistry since 2011 is hard coded as port use 2010 for rmiregistry
+$ rmiregistry 2011&
+-run the server on 10.234.136.55
+$ java -cp ".:../lib/mysql-connector-java-5.0.8-bin.jar" com.iupui.marketplace.server.MarketplaceServer
+-run client (in another duplicated session)
+$ java com.iupui.marketplace.client.MarketplaceClient
+
+
+-All functionalities implemented, synchronization achieved. Final product
+
+__________________________________________________________________________________________________________________________________________
 ﻿Assignment #4
 Given Task: In Assignment #4 you will build upon and improve the existing framework that you have created in the first three assignments for our Marketplace App. For this particular assignment you will be examining the impact that Concurrency has on our application. As mentioned in lecture Java RMI provides the vague definition on the handling of concurrency (specifically threading): 
 
