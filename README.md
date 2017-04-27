@@ -51,7 +51,7 @@ $ make
 
 Execution Instructions:
 make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
--run rmiregistry since 2011 is hard coded as port use 2010 for rmiregistry
+-run rmiregistry since 2011 is hard coded as port use 2011 for rmiregistry
 $ rmiregistry 2011&
 -run the server on 10.234.136.55
 $ java -cp ".:../lib/mysql-connector-java-5.0.8-bin.jar" com.iupui.marketplace.server.MarketplaceServer
