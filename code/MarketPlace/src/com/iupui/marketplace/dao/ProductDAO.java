@@ -103,12 +103,7 @@ public class ProductDAO {
             synchronized(MarketplaceControllerImpl.productLockMap.get(item.getProduct().getProductId())) {
 
                 System.out.println(Thread.currentThread().getName() +" -: purchase item critical entry ");
-                // to be removed, added for testing
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
                 // checks if item is available
                 boolean isAvailable = isProductAvailable(item.getProduct().getProductId(), item.getQuantity());
                 Item orderItem = new Item();

@@ -90,11 +90,6 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
         // this also ensures no 2 admin threads can update an same product at the same time
         synchronized(MarketplaceControllerImpl.productLockMap.get(product.getProductId())){
 			System.out.println(Thread.currentThread().getName() +" -: update product critical section ");
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			status = productDAO.updateProduct(product);
 			System.out.println(Thread.currentThread().getName() +" -: update product exit ");
         }
@@ -122,11 +117,6 @@ public class MarketplaceControllerImpl extends UnicastRemoteObject implements Ma
 
         synchronized(MarketplaceControllerImpl.productLockMap.get(productId)){
             System.out.println(Thread.currentThread().getName() +" -: remove product critical section ");
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             status = productDAO.removeProduct(productId);
 			System.out.println(Thread.currentThread().getName() +" -: remove product exit ");
         }
