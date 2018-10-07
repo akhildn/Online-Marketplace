@@ -164,9 +164,9 @@ In Assignment #3 you will build upon and improve the existing framework that you
 └── docs`
 
 Compilation through make file:
--go to csci50700_spring2017_marketplace/code/MarketPlace/src/   
+- go to csci50700_spring2017_marketplace/code/MarketPlace/src/   
 `$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/`  
--run make  
+- run make  
 `$ make`
 
 Execution Instructions:
