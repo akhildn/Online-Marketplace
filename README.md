@@ -59,7 +59,7 @@ make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPla
 `$ rmiregistry 2011&`
 - run the server on 10.234.136.55
 `$ java -cp ".:../lib/mysql-connector-java-5.0.8-bin.jar" com.iupui.marketplace.server.MarketplaceServer`
--run client (in another duplicated session)
+- run client (in another duplicated session)
 `$ java com.iupui.marketplace.client.MarketplaceClient`
 
 
