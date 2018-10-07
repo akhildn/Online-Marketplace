@@ -34,7 +34,10 @@ Your code should be properly documented and should make use of common language s
 └── docs`
 
 | Server on: | 10.234.136.55|
+|------------|--------------|
+
 | Clients on:| 10.234.136.56, 10.234.136.57, 10.234.136.58, 10.234.136.59, 10.234.136.60 |
+|------------|---------------------------------------------------------------------------|
 
 | Database:                                       |  
 |-------------------------------------------------|
@@ -96,28 +99,32 @@ Our goal is to examine this definition within the scope of our application. The 
 │                       └── server
 └── docs`
 
+
 | Server on: | 10.234.136.55|
+|------------|--------------|
+
 | Clients on:| 10.234.136.56, 10.234.136.57, 10.234.136.58, 10.234.136.59, 10.234.136.60 |
+|------------|---------------------------------------------------------------------------|
 
 Compilation through make file:
-- go to csci50700_spring2017_marketplace/code/MarketPlace/src/ 
+- go to csci50700_spring2017_marketplace/code/MarketPlace/src/  
 `$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/`
-- run make
+- run make  
 `$ make`
 
 Execution Instructions:
 - make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
-- run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry
+- run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry   
 `$ rmiregistry 2010&`
-- run the server on 10.234.136.55
+- run the server on 10.234.136.55  
 `$ java com.iupui.marketplace.server.MarketplaceServer`
-- run client (in another duplicated session)
+- run client (in another duplicated session)  
 `$ java com.iupui.marketplace.client.MarketplaceClient`
 
-Credentials:
+Credentials: 
 
-{username:password} =
-Admins :   {admin1:admin,admin2:admin}
+{username:password} =  
+Admins :   {admin1:admin,admin2:admin}  
 customers: {user1:user,user2:user,user3:user,user4:user,user5:user,user6:user}
 
 **Functionalities and view implemented:**
@@ -134,53 +141,53 @@ ________________________________________________________________________________
 ### Given Task: 
 In Assignment #3 you will build upon and improve the existing framework that you have created in Assignments #1 and #2 for our Marketplace App. For this particular assignment you will be expanding your application to make use of the Authorization pattern through a role-based access control (RBAC) approach that will make use of Java Annotations. As part of this process you will also implement and explore further the Proxy pattern and the Reflection pattern within the Java programming language. As with Assignment #2, for right now we will consider the two roles within the application to be two distinct roles – meaning an administrator account cannot act like a customer account – if the same individual wants to play both roles he/she must have two separate accounts – although with the use of annotations this could be accommodated in the future. All of the other requirements are still valid.
 
-Directory Structure:
-.
-├── code
-│   └── MarketPlace
-│       ├── nbproject
-│       │   └── private
-│       └── src
-│           └── com
-│               └── iupui
-│                   └── marketplace
-│                       ├── client
-│                       │   ├── command
-│                       │   ├── commands
-│                       │   ├── handlers
-│                       │   └── view
-│                       ├── controller
-│                       ├── dao
-│                       ├── model
-│                       │   └── beans
-│                       └── server
-└── docs
+`Directory Structure:  
+.  
+├── code  
+│   └── MarketPlace  
+│       ├── nbproject  
+│       │   └── private  
+│       └── src  
+│           └── com  
+│               └── iupui  
+│                   └── marketplace   
+│                       ├── client   
+│                       │   ├── command   
+│                       │   ├── commands  
+│                       │   ├── handlers  
+│                       │   └── view  
+│                       ├── controller  
+│                       ├── dao  
+│                       ├── model  
+│                       │   └── beans  
+│                       └── server  
+└── docs`
 
 Compilation through make file:
--go to csci50700_spring2017_marketplace/code/MarketPlace/src/ 
-$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/
--run make
-$ make
+-go to csci50700_spring2017_marketplace/code/MarketPlace/src/   
+`$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/`  
+-run make  
+`$ make`
 
 Execution Instructions:
-make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
--run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry
-$ rmiregistry 2010&
--run the server (in duplicated session)
-$ java com.iupui.marketplace.server.MarketplaceServer
--run client (in another duplicated session)
-$ java com.iupui.marketplace.client.MarketplaceClient
+- make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)  
+- run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry  
+`$ rmiregistry 2010&`
+- run the server (in duplicated session)  
+`$ java com.iupui.marketplace.server.MarketplaceServer`
+- run client (in another duplicated session)  
+`$ java com.iupui.marketplace.client.MarketplaceClient`
 
 
 Credentials:
 
-For customer view:
-username: customer
-password: customer
+For customer view:  
+username: customer  
+password: customer  
 
-For admin view:
-username: admin
-password: admin
+For admin view:  
+username: admin  
+password: admin  
 
 Both admin and customer have same Browse View, press 1 for browse view 
 Customer does not have access to edit items in browse view 
