@@ -179,7 +179,7 @@ Execution Instructions:
 `$ java com.iupui.marketplace.client.MarketplaceClient`
 
 
-Credentials:
+Credentials: 
 
 For customer view:  
 username: customer  
@@ -189,9 +189,9 @@ For admin view:
 username: admin  
 password: admin  
 
-Both admin and customer have same Browse View, press 1 for browse view 
-Customer does not have access to edit items in browse view 
-Admin does not have access to add items to cart in browse view 
+Both admin and customer have same Browse View, press 1 for browse view  
+Customer does not have access to edit items in browse view  
+Admin does not have access to add items to cart in browse view  
 __________________________________________________________________________________________________________________________________________
 
 Assignment #2
@@ -218,30 +218,31 @@ Given Task: For Assignment #2 your job is to build upon and improve the existing
 │                       └── server
 └── docs`
 
-Compilation through make file:
-- go to csci50700_spring2017_marketplace/code/MarketPlace/src/ 
+Compilation through make file:  
+- go to csci50700_spring2017_marketplace/code/MarketPlace/src/  
 `$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/`
-- run make
+- run make  
 `$ make`
 
-Execution Instructions:
-- make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
-- run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry
+Execution Instructions: 
+- make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)  
+- run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry  
 `$ rmiregistry 2010&`
-- run the server 
+- run the server  
 `$ java com.iupui.marketplace.server.MarketplaceServer`
-- run client (in another duplicated session)
+- run client (in another duplicated session)  
 `$ java com.iupui.marketplace.client.MarketplaceClient`
+
 
 ** Credentials:
 
-For customer view:
-username: customer
-password: customer
+For customer view:  
+username: customer  
+password: customer  
 
-For admin view:
-username: admin
-password: admin
+For admin view:  
+username: admin  
+password: admin  
 
 __________________________________________________________________________________________________________________________________________
 
@@ -288,23 +289,23 @@ csci50700_spring2017_marketplace/
 
 
 Compilation Instructions:
-- navigate to following folder:
+- navigate to following folder:  
 `$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/`
-- to compile all the .java files in all packages (use the following command in above directory (make sure you are in src folder)
+- to compile all the .java files in all packages (use the following command in above directory (make sure you are in src folder)  
 `$ javac com/iupui/marketplace/*.java com/iupui/marketplace/client/*.java com/iupui/marketplace/server/*.java com/iupui/marketplace/controller/*.java com/iupui/marketplace/model/beans/*.java`
 
 Compilation through make file
-- go to csci50700_spring2017_marketplace/code/MarketPlace/src/ 
+- go to csci50700_spring2017_marketplace/code/MarketPlace/src/   
 `$ cd csci50700_spring2017_marketplace/code/MarketPlace/src/`
-- run make
+- run make  
 `$ make`
 
 Execution Instructions:
-- make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)
-- run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry
+- make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPlace/src/)  
+- run rmiregistry since 2010 is hard coded as port use 2010 for rmiregistry  
 `$ rmiregistry 2010&`
-- run the server 
+- run the server   
 `$ java com.iupui.marketplace.server.MarketplaceServer`
-- run client (in another duplicated session)
+- run client (in another duplicated session)  
 `$ java com.iupui.marketplace.client.MarketplaceClient`
 
