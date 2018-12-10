@@ -67,6 +67,25 @@ make sure you are in src folder (csci50700_spring2017_marketplace/code/MarketPla
 
 
 **All functionalities implemented, synchronization achieved. Final product**
+Documents: https://github.com/akhildn/Online-Marketplace/tree/master/docs
+
+### UML diagrams:  
+
+**Domain Model**  
+![alt text](https://github.com/akhildn/Online-Marketplace/blob/master/images/domain_model.png)   
+
+**Front Controller**  
+![alt text](https://github.com/akhildn/Online-Marketplace/blob/master/images/Controller_pattern.png)  
+
+**Abstract Factory**  
+![alt text](https://github.com/akhildn/Online-Marketplace/blob/master/images/Abstract_factory.png)  
+
+**Command Pattern**  
+![alt text](https://github.com/akhildn/Online-Marketplace/blob/master/images/Command_pattern.png)  
+
+**RBAC (Role Based Access Control through Java Annotations & Proxy)**  
+![alt text](https://github.com/akhildn/Online-Marketplace/blob/master/images/RBAC_Proxy.PNG)
+
 
 __________________________________________________________________________________________________________________________________________
 ## Assignment #4
