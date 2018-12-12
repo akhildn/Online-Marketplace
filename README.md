@@ -1,4 +1,4 @@
-# Online Marketplace (Agile Development)
+# Online Marketplace (OO Design Principles and Patterns)
 
 # Project Overview:
 
