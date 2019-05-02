@@ -53,14 +53,14 @@ It is a customer specific view which displays all the orders which were successf
 
 # Design Principles and Patterns:
 
-### MVC
-### Front-Controller
-### Abstract Factory 
-### Command Pattern
-### Proxy, Reflection 
-### RBAC using Java Annotations
-### Singleton
-### Concurrency (Monitor Object, Future, Guarded Suspension, Scoped Locking, and Thread-Safe Interface) 
+- ### MVC
+- ### Front-Controller
+- ### Abstract Factory 
+- ### Command Pattern
+- ### Proxy, Reflection 
+- ### RBAC using Java Annotations
+- ### Singleton
+- ### Concurrency (Monitor Object, Future, Guarded Suspension, Scoped Locking, and Thread-Safe Interface) 
 
 # UML Diagrams:
 
