@@ -51,6 +51,17 @@ The items which were placed and those which were not placed are displayed based 
 ### Order History View
 It is a customer specific view which displays all the orders which were successfully placed by the user so far (till date).
 
+# Design Principles and Patterns:
+
+### MVC
+### Front-Controller
+### Abstract Factory 
+### Command Pattern
+### Proxy, Reflection 
+### RBAC using Java Annotations
+### Singleton
+### Concurrency (Monitor Object, Future, Guarded Suspension, Scoped Locking, and Thread-Safe Interface) 
+
 # UML Diagrams:
 
 ### Domain Model
